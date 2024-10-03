@@ -9,7 +9,7 @@ import sys
 from importlib import metadata
 
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QLabel, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QLabel
 from PySide6.QtCore import QSettings, QSize
 
 from panels import SettingsPanel, FilePreviewPanel
@@ -135,7 +135,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
                 "QScrollBar::sub-line|scrollbar-sub-line",
             ]
         )
-        self.setWindowTitle(f"SeaingClearly - Workbench v{__version__}")
+        self.setWindowTitle(f"SeaingClearly - IOT Emulator v{__version__}")
         self.setMinimumWidth(600)
         self.setMinimumHeight(800)
         self.setGeometry(0, 0, 1000, 800)
@@ -187,7 +187,6 @@ class SeaingClearly(StylerMixin, QMainWindow):
         settings.setValue("windowSize", self.size())
         settings.setValue("windowPosition", self.pos())
         super().closeEvent(event)
-
 
 
 def main():

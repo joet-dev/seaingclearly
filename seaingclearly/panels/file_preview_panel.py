@@ -1,14 +1,21 @@
 import fnmatch
 import os
-from typing import Tuple
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QListWidget, QLabel, QListWidgetItem
-from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QListWidget, QLabel, QListWidgetItem, QHBoxLayout, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView
+from PySide6.QtGui import QPixmap, QPainter, QBrush
 from PySide6.QtCore import Qt
 
 from components import Widget, StylerMixin, PathLineEdit
 from components.validators import ValidationResponse
 from components.settings import Settings
+
+class ImagePreview(QGraphicsPixmapItem):
+    def paint(self, painter, option, widget):
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        brush:QBrush = QBrush(self.pixmap())
+        painter.setBrush(brush)
+
+        painter.drawRoundedRect(self.boundingRect(), self.pixmap().width(), self.pixmap().height())
 
 
 class FilePreviewPanel(QWidget):
@@ -78,7 +85,7 @@ class FilePreviewList(StylerMixin, QListWidget):
 
     def _addItem(self, rel_file_path: str):
         item = QListWidgetItem(self)
-        widget = FilePreviewItem(self.currentDir, rel_file_path)
+        widget = FilePreviewListItem(self.currentDir, rel_file_path)
         item.setSizeHint(widget.sizeHint())
         self.addItem(item)
         self.setItemWidget(item, widget)
@@ -98,7 +105,7 @@ class FilePreviewList(StylerMixin, QListWidget):
         return matches
 
 
-class FilePreviewItem(StylerMixin, QWidget):
+class FilePreviewListItem(StylerMixin, QWidget):
     def __init__(self, base_path: str, rel_path: str, parent=None):
         super().__init__(
             name="filepreviewitem",
@@ -108,34 +115,34 @@ class FilePreviewItem(StylerMixin, QWidget):
         self.path = os.path.join(base_path, rel_path)
         print(self.path)
         self.rel_path = rel_path
+        self.preview_size = 80
+
         self._setupLayout()
 
     def _setupLayout(self):
-        layout = QVBoxLayout()
+        main_layout = QHBoxLayout()
 
-        # File name
-        file_name = os.path.basename(self.path)
-        file_name_label = QLabel(file_name)
-        layout.addWidget(file_name_label)
-
-        relative_path_label = QLabel(self.rel_path)
-        layout.addWidget(relative_path_label)
-
-        # Preview image
-        preview_label = QLabel()
         preview_pixmap = self._loadPreviewImage(self.path)
         if preview_pixmap:
-            preview_label.setPixmap(preview_pixmap)
-        layout.addWidget(preview_label)
+            image_preview = ImagePreview(preview_pixmap)
+            scene = QGraphicsScene()
+            scene.addItem(image_preview)
+            view = QGraphicsView(scene)
+            view.setFixedSize(self.preview_size + 10, self.preview_size + 10)  # Adjust size as needed
+            view.setAlignment(Qt.AlignCenter)
+            main_layout.addWidget(view)
+        
+        relative_path_label = QLabel(self.rel_path)
+        main_layout.addWidget(relative_path_label)
 
-        self.setLayout(layout)
+        self.setLayout(main_layout)
 
     def _loadPreviewImage(self, path: str) -> QPixmap:
         if path.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
-            return QPixmap(path).scaled(100, 100, Qt.KeepAspectRatio)
+            return QPixmap(path).scaled(self.preview_size, self.preview_size, Qt.KeepAspectRatio)
         elif path.lower().endswith((".mp4", ".avi", ".mov")):
             # For simplicity, using a placeholder image for video files
             # You can use a library like OpenCV to extract a frame from the video
-            return QPixmap("video_placeholder.png").scaled(100, 100, Qt.KeepAspectRatio)
+            return QPixmap("video_placeholder.png").scaled(self.preview_size, self.preview_size, Qt.KeepAspectRatio)
 
         return None
