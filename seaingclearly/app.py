@@ -15,6 +15,7 @@ from PySide6.QtCore import QSettings, QSize
 from panels import SettingsPanel, FilePreviewPanel
 from components import StyleTheme, StylerMixin,Widget
 from components.settings import Settings
+from seaingclearly.config import template_styles, asset_paths, settings
 
 
 try:
@@ -33,96 +34,6 @@ except ImportError:
     pass
 
 
-template_styles = {
-    "border": {
-        "border": "1px solid #636363",
-        "border-radius": "5px",
-        "padding": "5px",
-    },
-    "border-focus": {
-        "border": "1px solid #333",
-    },
-    "button": {
-        "padding": "4px",
-        "border": "1px solid #636363",
-        "border-radius": "5px",
-        "background-color": "#636363",
-    },
-    "button-hover": {
-        "background-color": "#ff0099",
-    },
-    "primary-background" : {
-        "background-color": "#c4c4c4"
-    },
-    "list-item-selected" : {
-        "background-color": "#ff0099",
-        "border": "1px solid #ff0099",
-        "border-radius": "5px",
-    },
-    "list-item-hover" : {
-        "background-color": "#ff0099",
-        "border": "1px solid #ff0099",
-        "border-radius": "5px",
-    },
-    "primary-colour": {
-        "color": "#ff0099"
-    },
-    "checkbox": {
-        "color": "#c4c4c4",
-        "background-color": "transparent",
-        "border": "1px solid #262626",
-        "font-size": "12px",
-        "font-weight": "normal",
-        "margin": "3px 0px 3px 0px",
-    },
-        "scrollbar": {
-        "border": "1px solid grey",
-        "border-radius": "5px",
-        "background": "#1a1a1a",
-        "margin": "0px 0px 0px 0px",
-    },
-    "hor-scrollbar": {
-        "height": "10px",
-    },
-    "vert-scrollbar": {
-        "width": "10px",
-    },
-    "scrollbar-thumb": {
-        "background": "#2b2b2b",
-        "border-radius": "5px",
-    },
-    "scrollbar-add-line": {
-        "background": "none",
-        "width": "0px",
-        "height": "0px",
-        "subcontrol-position": "bottom",
-        "subcontrol-origin": "margin",
-    },
-    "scrollbar-sub-line": {
-        "background": "none",
-        "width": "0px",
-        "height": "0px",
-        "subcontrol-position": "top",
-        "subcontrol-origin": "margin",
-    },
-    "label": {
-        "background-color": "transparent",
-        "font-size": "12px",
-        "font-weight": "normal",
-        "margin": "0px 0px 6px 0px",
-    }
-}
-
-asset_paths = {
-    "prawn": r"assets\prawn\prawn.png",
-    "folder": r"assets\folder.png",
-}
-
-settings = {
-    "file_match_pattern" : [r"*.mp4", r"*.avi", r"*.mov", r"*.jpg", r"*.jpeg", r"*.png", r"*.gif"],
-}
-
-
 class SeaingClearly(StylerMixin, QMainWindow): 
     def __init__(self): 
         super().__init__(
@@ -135,7 +46,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
                 "QScrollBar::sub-line|scrollbar-sub-line",
             ]
         )
-        self.setWindowTitle(f"SeaingClearly - IOT Emulator v{__version__}")
+        self.setWindowTitle(f"SeaingClearly - WorkBench v{__version__}")
         self.setMinimumWidth(600)
         self.setMinimumHeight(800)
         self.setGeometry(0, 0, 1000, 800)
@@ -150,7 +61,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
 
 
     def _setupLayout(self): 
-        central_widget = Widget(name="centralwidget", style_sheet={"QWidget#centralwidget": "background-color: #262626; color: #c4c4c4;"})
+        central_widget = Widget(name="centralwidget", parent=self, theme_classes=["QWidget|primary-background", "QWidget|primary-colour"])
 
         hori_layout = QHBoxLayout()
         hori_layout.setContentsMargins(0, 0, 0, 0)
@@ -161,6 +72,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
 
         hori_layout.addWidget(self.left_preview_panel)
         hori_layout.addWidget(self.label)
+        hori_layout.addStretch()
 
         central_widget.setLayout(hori_layout)
         self.setCentralWidget(central_widget)

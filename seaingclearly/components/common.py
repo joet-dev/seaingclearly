@@ -67,7 +67,7 @@ class Button(StylerMixin, QPushButton):
         super().__init__(
             text=text,
             name=name,
-            theme_classes=[f"QPushButton#{name}|button", f"QPushButton#{name}:hover|button-hover"],
+            theme_classes=[f"QPushButton#{name}|ele", f"QPushButton#{name}:hover|ele-hover", f"QPushButton#{name}|button"],
         )
 
         if custom_style is not None:
@@ -169,14 +169,15 @@ class Label(StylerMixin, QLabel):
     def __init__(
         self,
         text: str,
+        name: str = None,
         font_size: int = None,
         custom_style: dict = None,
         theme_classes: list[str] = ["QLabel|label"],
     ):
-        super().__init__(text=text, theme_classes=theme_classes)
+        super().__init__(text=text, name=name, theme_classes=theme_classes)
 
         if font_size:
-            self.hard_modify_sheet({"QLabel": {"font-size": f"{font_size}px"}})
+            self.hardModifySheet({"QLabel": {"font-size": f"{font_size}px"}})
 
         if custom_style:
-            self.hard_modify_sheet(custom_style)
+            self.hardModifySheet(custom_style)

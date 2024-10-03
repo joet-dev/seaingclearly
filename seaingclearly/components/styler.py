@@ -26,6 +26,7 @@ class StyleTheme:
             self.boiler = boiler
             self.colors = colors
             self.paths = paths
+            self.styles_set:set[str] = set()
 
     def get_boiler_from_list(
         self, comp_key: list[str]
@@ -52,6 +53,8 @@ class StylerMixin:
     ):
         super().__init__(**kwargs)
 
+        self.theme_obj:StyleTheme = StyleTheme()
+        
         if name is not None:
             self.setObjectName(name)
 
@@ -61,9 +64,7 @@ class StylerMixin:
             style_sheet = {}
 
         if len(theme_classes) > 0:
-            self.theme = StyleTheme()
-
-            for element, boiler in self.theme.get_boiler_from_list(theme_classes):
+            for element, boiler in self.theme_obj.get_boiler_from_list(theme_classes):
                 if element not in style_sheet:
                     style_sheet[element] = boiler
                 else:
@@ -95,15 +96,18 @@ class StylerMixin:
         self.setSheet()
 
     def setSheet(self):
+        if self.current_style_sheet_dict == {}:
+            return
+        
         print(f"SET {self.objectName()} ({type(self)})", self.current_style_sheet_dict)
 
         self.setStyleSheet(dict_to_custom_string(self.current_style_sheet_dict))
 
     def getIconPath(self, icon: str) -> str:
-        if icon not in self.theme.paths:
+        if icon not in self.theme_obj.paths:
             raise KeyError(f"Icon {icon} not found in paths")
 
-        return self.theme.paths[icon]
+        return self.theme_obj.paths[icon]
 
 
 def deep_update(original: dict, updates: dict):
@@ -121,11 +125,11 @@ def deep_update(original: dict, updates: dict):
 
 
 def dict_to_custom_string(d: dict) -> str:
-    def format_dict(d: dict) -> str:
+    def format_dict(d: dict, depth:int = 0) -> str:
         items = []
         for k, v in d.items():
             if isinstance(v, dict):
-                items.append(f"{k} {{{format_dict(v)}}}")
+                items.append(f"{k} {{{format_dict(v, depth + 1)}}}")
             else:
                 items.append(f"{k}: {v};")
         return " ".join(items)

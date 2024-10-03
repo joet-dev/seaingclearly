@@ -13,7 +13,7 @@ class SettingsPanel(QWidget):
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(0, 0, 0, 0)
 
-        main_widget = Widget(name="settingspanel", parent=self, style_sheet={"QWidget#settingspanel": {"border-right": "1px solid #333"}})
+        main_widget = Widget(name="settingspanel", parent=self, theme_classes=["#settingspanel|primary-background", "QWidget|primary-colour"])
         virt_layout = QVBoxLayout()
 
         self.chk_box = QCheckBox("Show File Preview")
