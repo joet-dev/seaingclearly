@@ -1,20 +1,26 @@
 import fnmatch
 import os
-from typing import Optional
+from typing import Generator
 
-import cv2
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QListWidget, QLabel, QListWidgetItem, QHBoxLayout
-from PySide6.QtGui import QPixmap, QImage
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread
-
-from components import Widget, StylerMixin, PathLineEdit
-from components.validators import ValidationResponse
-from components.settings import Settings
+from components import PathLineEdit, StylerMixin, Widget
 from components.common import Label
+from components.settings import Settings
 from components.util import getFileSize
+from components.validators import ValidationResponse
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QListWidget,
+    QListWidgetItem,
+    QVBoxLayout,
+    QWidget,
+)
 
+from seaingclearly.components.widgets import (
+    ImageLoaderManager,
+    ImageLoaderWorker,
+    ImagePreview,
+)
 from seaingclearly.config import colours
-
 
 class FilePreviewPanel(QWidget):
     def __init__(self):
@@ -53,7 +59,7 @@ class FilePreviewPanel(QWidget):
 
         # TODO Comment out
         self.file_preview_path.line_edit.setText(
-            r"C:\Users\JosephThurlow\OneDrive\Pictures\Facebook"
+            r"D:\Programming\_UNI\SEAING-CLEARLY\datasets\Underwater Marine Species.v6-marinedataset_v5.yolov8\test\images"
         )
 
     def _onPathChanged(self, response: ValidationResponse):
@@ -65,32 +71,33 @@ class FilePreviewPanel(QWidget):
 
         self.file_preview_list.setDirectory(response.text)
 
-
 class FilePreviewList(StylerMixin, QListWidget):
     def __init__(self):
         super().__init__(
             name="filepreviewlist", theme_classes=["QListWidget#filepreviewlist|border", "QListWidget#filepreviewlist::item:selected|ele-selected", "QListWidget#filepreviewlist::item:hover|ele-hover"]
         )
         self.file_match_patterns = Settings().getSetting("file_match_pattern")
+        
+        self.image_loader_manager = ImageLoaderManager()
 
     def setDirectory(self, path: str):
-        self.currentDir = path
+        self.current_dir = path
 
-        rel_file_paths: list = self._searchDirectory(path)
-
-        for rel_file_path in rel_file_paths:
+        for rel_file_path in self._searchDirectory(path):
             self._addItem(rel_file_path)
+
+        self.image_loader_manager.signals.request_img_load.emit()
 
     def _addItem(self, rel_file_path: str):        
         item = QListWidgetItem(self)
-        widget = FilePreviewListItem(self.currentDir, rel_file_path)
+
+        image_worker = self.image_loader_manager.getImageWorker(os.path.join(self.current_dir, rel_file_path))
+        widget = FilePreviewListItem(self.current_dir, rel_file_path, image_worker)
         item.setSizeHint(widget.sizeHint())
         self.addItem(item)
         self.setItemWidget(item, widget)
 
-    def _searchDirectory(self, path: str) -> list[str]:
-        matches: list[str] = []
-
+    def _searchDirectory(self, path: str) -> Generator[str, None, None]:
         for filename in os.listdir(path):
             full_path = os.path.join(path, filename)
             if os.path.isfile(full_path) and any(
@@ -98,13 +105,10 @@ class FilePreviewList(StylerMixin, QListWidget):
                 for pattern in self.file_match_patterns
             ):
                 relative_path = full_path.removeprefix(f"{path}\\").replace("\\", "/")
-                matches.append(relative_path)
+                yield relative_path
         
-        return matches
-
-
 class FilePreviewListItem(StylerMixin, QWidget):
-    def __init__(self, base_path: str, rel_path: str, parent=None):
+    def __init__(self, base_path: str, rel_path: str, image_loader:ImageLoaderWorker, parent=None):
         super().__init__(
             name="filepreviewitem",
             parent=parent,
@@ -112,15 +116,15 @@ class FilePreviewListItem(StylerMixin, QWidget):
         )
         self.path = os.path.join(base_path, rel_path)
         self.rel_path = rel_path
+        self.image_loader = image_loader
 
-        print("PATH:", self.path)
         self._setupLayout()
 
     def _setupLayout(self) -> None:
         main_layout = QHBoxLayout()
         main_layout.setContentsMargins(3, 3, 3, 3)
 
-        self.image_preview = ImagePreview(self.path)
+        self.image_preview = ImagePreview(self.path, image_loader=self.image_loader)
         main_layout.addWidget(self.image_preview)
 
         v_layout = QVBoxLayout()
@@ -137,84 +141,7 @@ class FilePreviewListItem(StylerMixin, QWidget):
 
         self.setLayout(main_layout)
         
-class ImagePreview(QLabel):
-    def __init__(self, image_path: str, preview_size: int = 80, parent=None):
-        super().__init__(parent)
-        self.preview_size = preview_size
-        self.path = image_path
-
-        self.setFixedSize(preview_size, preview_size)
-        self.setScaledContents(False)
-        self.setAlignment(Qt.AlignCenter)
-        self.setStyleSheet("QLabel { background-color: #222; }")
-
-        self._loadImageInThread()
-
-    def _loadImageInThread(self) -> None:
-        self.thread:QThread = QThread()
-        self.worker = ImageLoaderWorker(self.path, self.preview_size)
-        self.worker.moveToThread(self.thread)
-        self.worker.imageLoaded.connect(self._onImageLoaded)
-        self.thread.started.connect(self.worker.loadImage)
-        self.thread.start()
-
-    @Slot(QPixmap)
-    def _onImageLoaded(self, pixmap: QPixmap) -> None:
-        if pixmap is not None:
-            scaled_pixmap = pixmap.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            self.setPixmap(scaled_pixmap)
-
-        self.thread.quit()
-        self.thread.wait()
-        self.worker.deleteLater()
-        self.thread.deleteLater()
 
 
-class ImageLoaderWorker(QObject):
-    imageLoaded = Signal(QPixmap)
 
-    def __init__(self, path: str, preview_size: int):
-        super().__init__()
-        self.path = path
-        self.preview_size = preview_size
-
-    @Slot()
-    def loadImage(self) -> None:
-        pixmap = self._loadPreviewImage(self.path)
-
-        self.imageLoaded.emit(pixmap)
-
-    def _loadPreviewImage(self, content_path: str) -> QPixmap:
-        pixmap = None
-        if content_path.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
-            pixmap = QPixmap(content_path)
-        elif content_path.lower().endswith((".mp4", ".avi", ".mov")):
-            pixmap = self._extractFrameFromVideo(content_path)
-
-        if pixmap.isNull() or pixmap is None:
-            return None
-        
-        return pixmap
-        
-    def _extractFrameFromVideo(self, video_path: str) -> Optional[QPixmap]:
-        cap = cv2.VideoCapture(video_path)
-        if not cap.isOpened():
-            print(f"Failed to open video file: {video_path}")
-            return QPixmap()
-
-        ret, frame = cap.read()
-        cap.release()
-
-        if not ret:
-            print(f"Failed to read frame from video file: {video_path}")
-            return None
-
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-        height, width, channel = frame_rgb.shape
-        bytes_per_line = 3 * width
-        q_image = QImage(frame_rgb.data, width, height, bytes_per_line, QImage.Format_RGB888)
-
-        pixmap = QPixmap.fromImage(q_image)
-        return pixmap
 
