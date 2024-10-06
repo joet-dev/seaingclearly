@@ -7,9 +7,7 @@ from PySide6.QtCore import (
     Qt,
     Signal,
     Slot,
-    QThread,
-    QThreadPool,
-    QRunnable
+    QThread
 )
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QLabel

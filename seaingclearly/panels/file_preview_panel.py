@@ -202,7 +202,7 @@ class FilePreviewList(StylerMixin, QListWidget):
 
             self.setItemWidget(list_item, item)
 
-        print("Current Range:", self.count(), f"{self.start} - {self.end}", f"| {add_start} - {add_end}", increment)
+        self.verticalScrollBar().setValue(self.verticalScrollBar().value() + (-increment * self.batch_len_limit))
         self.image_loader_manager.loadAll()
 
         self.loading = False
@@ -222,6 +222,7 @@ class FilePreviewList(StylerMixin, QListWidget):
             self._enqueueItems()
         elif value == scroll_bar.minimum():
             self._enqueueItems(reverse=True)
+       
         
 class FilePreviewListItem(StylerMixin, QWidget):
     def __init__(self, file_path:str, image_loader, parent=None):
