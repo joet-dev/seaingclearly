@@ -151,14 +151,22 @@ class PathLineEdit(QWidget):
 
         self.pathChanged.emit(response)
 
-
-    def browse(self):
-        downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
-        folder_path = QFileDialog.getExistingDirectory(
-            self, "Select Extraction Folder", downloads_folder
+    def browse(self, use_current=True):
+        if use_current:
+            folder_path = self.line_edit.text()
+            if os.path.exists(folder_path):
+                folder_path = os.path.dirname(folder_path)
+            else:
+                folder_path = os.path.join(os.path.expanduser("~"), "Downloads")
+                
+        dialog = QFileDialog(
+            self, "Select Image/Video Folder", folder_path
         )
 
-        if folder_path:
+        dialog.setFileMode(QFileDialog.Directory)
+
+        if dialog.exec():
+            folder_path = dialog.selectedFiles()[0]
             self.line_edit.setText(folder_path)
 
     def lineEdit(self):

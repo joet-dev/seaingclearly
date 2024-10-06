@@ -1,6 +1,6 @@
 import fnmatch
 import os
-from typing import Generator
+from typing import List
 
 from components import PathLineEdit, StylerMixin, Widget
 from components.common import Label
@@ -15,12 +15,13 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from seaingclearly.components.widgets import (
+from PySide6.QtCore import QObject, QRunnable, Signal, Slot, QThreadPool, QTimer
+
+from components.widgets import (
     ImageLoaderManager,
-    ImageLoaderWorker,
     ImagePreview,
 )
-from seaingclearly.config import colours
+from config import colours
 
 class FilePreviewPanel(QWidget):
     def __init__(self):
@@ -71,6 +72,32 @@ class FilePreviewPanel(QWidget):
 
         self.file_preview_list.setDirectory(response.text)
 
+
+class DirectorySearchWorker(QRunnable):
+    class Signals(QObject):
+        finished = Signal(list)
+
+    def __init__(self, path: str, file_match_patterns: List[str], batch_size: int = 50):
+        super().__init__()
+        self.path = path
+        self.file_match_patterns = file_match_patterns
+        self.batch_size = batch_size
+        self.signals = self.Signals()
+
+    @Slot()
+    def run(self):
+        file_list:list[str] = []
+        for filename in os.listdir(self.path):
+            full_path = os.path.join(self.path, filename)
+            if os.path.isfile(full_path) and any(
+                fnmatch.fnmatch(filename, pattern)
+                for pattern in self.file_match_patterns
+            ):
+                file_list.append(full_path)
+                
+        self.signals.finished.emit(file_list)
+
+
 class FilePreviewList(StylerMixin, QListWidget):
     def __init__(self):
         super().__init__(
@@ -79,43 +106,131 @@ class FilePreviewList(StylerMixin, QListWidget):
         self.file_match_patterns = Settings().getSetting("file_match_pattern")
         
         self.image_loader_manager = ImageLoaderManager()
+        self.thread_pool = QThreadPool()
+        self.file_path_list = []
+
+        self.start = 0
+        self.end = 0
+
+
+        self.batch_len_limit = 2
+        self.view_range = 20
+
+        self.loading = False
+
+        self.scroll_timer = QTimer()
+        self.scroll_timer.setSingleShot(True)
+        self.scroll_timer.timeout.connect(self._onScroll)
 
     def setDirectory(self, path: str):
         self.current_dir = path
+        self.file_path_list = []
 
-        for rel_file_path in self._searchDirectory(path):
-            self._addItem(rel_file_path)
+        worker = DirectorySearchWorker(path, self.file_match_patterns)
+        worker.signals.finished.connect(self._setFiles)
+        self.thread_pool.start(worker)
 
-        self.image_loader_manager.signals.request_img_load.emit()
+    @Slot(list)
+    def _setFiles(self, files: List[str]):
+        self.file_path_list = files
 
-    def _addItem(self, rel_file_path: str):        
-        item = QListWidgetItem(self)
+        self._enqueueItems()
 
-        image_worker = self.image_loader_manager.getImageWorker(os.path.join(self.current_dir, rel_file_path))
-        widget = FilePreviewListItem(self.current_dir, rel_file_path, image_worker)
-        item.setSizeHint(widget.sizeHint())
-        self.addItem(item)
-        self.setItemWidget(item, widget)
+    # BUG duplicates on the turn around 
+    def _enqueueItems(self, reverse: bool = False):
+        if self.loading:
+            return
+                
+        self.loading = True
 
-    def _searchDirectory(self, path: str) -> Generator[str, None, None]:
-        for filename in os.listdir(path):
-            full_path = os.path.join(path, filename)
-            if os.path.isfile(full_path) and any(
-                fnmatch.fnmatch(filename, pattern)
-                for pattern in self.file_match_patterns
-            ):
-                relative_path = full_path.removeprefix(f"{path}\\").replace("\\", "/")
-                yield relative_path
+        if self.start == 0 and self.end == 0:
+            add_start = 0
+            add_end = self.view_range
+            self.end = self.view_range
+            increment = 1
+
+        else: 
+            if reverse: 
+                if self.start <= 0: 
+                    self.loading = False 
+                    return 
+                    
+                add_start = self.start
+                self.start = max(-1, self.start - self.batch_len_limit)
+                add_end = self.start
+
+                if self.end - self.start >=  self.view_range + 1:
+                    self.end -= self.batch_len_limit
+
+                if add_end == 0: 
+                    add_end = -1
+
+                increment = -1
+
+            else: 
+                if self.end >= len(self.file_path_list):
+                    self.loading = False
+                    return
+                
+                if self.end == -1: 
+                    self.end = 0
+
+                add_start = self.end
+                self.end = min(self.end + self.batch_len_limit, len(self.file_path_list))
+                add_end = self.end
+
+                if self.end - self.start >=  self.view_range + 1:
+                    self.start += self.batch_len_limit
+
+                increment = 1
+
+        for i in range(add_start, add_end, increment):
+            file_path = self.file_path_list[i]
+            worker = self.image_loader_manager.getImageWorker(file_path)
+            item = FilePreviewListItem(file_path, worker)
+            list_item = QListWidgetItem()
+            list_item.setSizeHint(item.sizeHint())
+
+            if reverse:
+                self.insertItem(0, list_item)
+                if self.count() > self.view_range:
+                    self.takeItem(self.view_range)
+            else:
+                self.addItem(list_item)
+                if self.count() > self.view_range:
+                    self.takeItem(0)
+
+            self.setItemWidget(list_item, item)
+
+        print("Current Range:", self.count(), f"{self.start} - {self.end}", f"| {add_start} - {add_end}", increment)
+        self.image_loader_manager.loadAll()
+
+        self.loading = False
+        
+    def wheelEvent(self, event):
+        super().wheelEvent(event)
+
+        self.scroll_timer.start(25)
+
+    def _onScroll(self):
+        if self.loading:
+            return 
+        
+        scroll_bar = self.verticalScrollBar()
+        value = scroll_bar.value()
+        if value == scroll_bar.maximum():
+            self._enqueueItems()
+        elif value == scroll_bar.minimum():
+            self._enqueueItems(reverse=True)
         
 class FilePreviewListItem(StylerMixin, QWidget):
-    def __init__(self, base_path: str, rel_path: str, image_loader:ImageLoaderWorker, parent=None):
+    def __init__(self, file_path:str, image_loader, parent=None):
         super().__init__(
             name="filepreviewitem",
             parent=parent,
             theme_classes=["#filepreviewitem|border"],
         )
-        self.path = os.path.join(base_path, rel_path)
-        self.rel_path = rel_path
+        self.path = file_path
         self.image_loader = image_loader
 
         self._setupLayout()
@@ -124,13 +239,13 @@ class FilePreviewListItem(StylerMixin, QWidget):
         main_layout = QHBoxLayout()
         main_layout.setContentsMargins(3, 3, 3, 3)
 
-        self.image_preview = ImagePreview(self.path, image_loader=self.image_loader)
+        self.image_preview = ImagePreview(image_loader=self.image_loader)
         main_layout.addWidget(self.image_preview)
 
         v_layout = QVBoxLayout()
         v_layout.setContentsMargins(0, 0, 0, 0)
                 
-        relative_path_label = Label(self.rel_path, name="pathlbl", theme_classes=["QLabel#pathlbl|label-header"])
+        relative_path_label = Label(os.path.basename(self.path), name="pathlbl", theme_classes=["QLabel#pathlbl|label-header"])
         v_layout.addWidget(relative_path_label)
 
         file_size_str = getFileSize(self.path)

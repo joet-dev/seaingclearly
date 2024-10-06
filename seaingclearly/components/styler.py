@@ -99,7 +99,7 @@ class StylerMixin:
         if self.current_style_sheet_dict == {}:
             return
         
-        print(f"SET {self.objectName()} ({type(self)})", self.current_style_sheet_dict)
+        # print(f"SET {self.objectName()} ({type(self)})", self.current_style_sheet_dict)
 
         self.setStyleSheet(dict_to_custom_string(self.current_style_sheet_dict))
 

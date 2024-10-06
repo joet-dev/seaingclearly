@@ -15,7 +15,7 @@ from PySide6.QtCore import QSettings, QSize
 from panels import SettingsPanel, FilePreviewPanel
 from components import StyleTheme, StylerMixin,Widget
 from components.settings import Settings
-from seaingclearly.config import template_styles, asset_paths, settings
+from config import template_styles, asset_paths, settings
 
 
 try:
@@ -117,4 +117,5 @@ def main():
 
 
 # if __name__ == '__main__':
+#     main()
     
