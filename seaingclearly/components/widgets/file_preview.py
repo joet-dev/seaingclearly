@@ -92,6 +92,7 @@ class ImagePreview(QLabel):
     def __init__(self, image_loader:ImageLoaderWorker, preview_size: int = 80, parent=None):
         super().__init__(parent)
         self.preview_size = preview_size
+        self.image = None
         
         self.setFixedSize(preview_size, preview_size)
         self.setScaledContents(False)
@@ -102,9 +103,14 @@ class ImagePreview(QLabel):
 
     @Slot(QImage)
     def _onImageLoaded(self, image: QImage) -> None:
+        self.image = image
+
         if image:
             pixmap = QPixmap.fromImage(image)
             scaled_pixmap = pixmap.scaled(
                 self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation
             )
             self.setPixmap(scaled_pixmap)
+
+        else: 
+            image = None

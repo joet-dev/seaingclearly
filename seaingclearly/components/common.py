@@ -1,8 +1,8 @@
 from typing import Callable, Tuple
 import os
 
-from PySide6.QtCore import QSize, Signal
-from PySide6.QtGui import QIcon, QPainter
+from PySide6.QtCore import QSize, Signal, Slot
+from PySide6.QtGui import QIcon, QPainter, QPalette, QColor, Qt
 from PySide6.QtWidgets import (
     QCheckBox,
     QHBoxLayout,
@@ -13,6 +13,8 @@ from PySide6.QtWidgets import (
     QStyleOption,
     QWidget,
     QFileDialog,
+    QGroupBox,
+    QVBoxLayout,
 )
 
 from .styler import StylerMixin
@@ -151,13 +153,12 @@ class PathLineEdit(QWidget):
 
         self.pathChanged.emit(response)
 
-    def browse(self, use_current=True):
-        if use_current:
-            folder_path = self.line_edit.text()
-            if os.path.exists(folder_path):
-                folder_path = os.path.dirname(folder_path)
-            else:
-                folder_path = os.path.join(os.path.expanduser("~"), "Downloads")
+    def browse(self):
+        folder_path = self.line_edit.text()
+        if os.path.exists(folder_path):
+            folder_path = os.path.dirname(folder_path)
+        else:
+            folder_path = os.path.join(os.path.expanduser("~"), "Downloads")
                 
         dialog = QFileDialog(
             self, "Select Image/Video Folder", folder_path
@@ -189,3 +190,52 @@ class Label(StylerMixin, QLabel):
 
         if custom_style:
             self.hardModifySheet(custom_style)
+
+
+class BoolDashboard(StylerMixin, QGroupBox):
+    optionsChanged = Signal(dict)
+
+    def __init__(self, name: str, label: str, items: dict):
+        super().__init__(
+            title=label,
+            name=name,
+            style_sheet={f"QGroupBox#{name}::title": {"subcontrol-origin": "margin", "subcontrol-position": "top center", "padding-bottom": "5px"}},
+            theme_classes=[f"QGroupBox#{name}|border", f"QGroupBox#{name}|group-box"],
+        )
+
+        self.group_layout = QVBoxLayout(self)
+        self.group_layout.setContentsMargins(5, 5, 5,5)
+
+        for key, value in items.items():
+            self.add_checkbox(key, value, True)
+
+    def add_checkbox(self, key: str, value: dict, checked: bool = True):
+        label = value.get("lbl", "")
+        tooltip = value.get("tt", "")
+        
+        checkbox = Checkbox(label)
+        checkbox.setChecked(checked)
+        checkbox.setObjectName(key)
+        
+        if tooltip:
+            checkbox.setToolTip(tooltip)
+
+        checkbox.stateChanged.connect(self.onCheckboxStateChanged)
+
+        self.group_layout.addWidget(checkbox)
+
+    @Slot()
+    def onCheckboxStateChanged(self):
+        self.optionsChanged.emit(self.validate_input())
+
+    def validate_input(self) -> dict:
+        res: dict = {}
+        count = self.group_layout.count()
+
+        for i in range(count):
+            item = self.group_layout.itemAt(i)
+            child: QCheckBox = item.widget()
+            res[child.objectName()] = child.isChecked()
+
+        return res
+

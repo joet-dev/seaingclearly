@@ -42,6 +42,10 @@ template_styles = {
         "background-color": f"{colours['selected']}",
     },
 
+    "checkbox": {
+        "padding": "5px 0px 5px 0px"
+    },
+    
     "border": {
         "border": f"2px solid {colours['border']}",
         "border-radius": "3px",
@@ -55,15 +59,6 @@ template_styles = {
     "button": {
         "border-radius": "3px",
         "padding": "4px",
-    },
-
-    "checkbox": {
-        "color": "#c4c4c4",
-        "background-color": "transparent",
-        "border": "1px solid #262626",
-        "font-size": "12px",
-        "font-weight": "normal",
-        "margin": "3px 0px 3px 0px",
     },
 
     "label-header": {
@@ -111,6 +106,14 @@ template_styles = {
         "height": "0px",
         "subcontrol-position": "top",
         "subcontrol-origin": "margin",
+    },
+
+    "group-box": {
+        "margin-top": "7px",
+        "padding": "10px",
+        "font-size": "14px",
+        "font-weight": "700",
+        "color": "#f4f4f4",
     },
 }
 

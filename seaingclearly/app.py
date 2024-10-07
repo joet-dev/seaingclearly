@@ -8,14 +8,14 @@ import os
 import sys
 from importlib import metadata
 
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QLabel
-from PySide6.QtCore import QSettings, QSize
+from PySide6.QtGui import QIcon, QImage
+from PySide6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QLabel, QVBoxLayout, QSizePolicy, QSplitter
+from PySide6.QtCore import QSettings, QSize, Qt
 
 from panels import SettingsPanel, FilePreviewPanel
 from components import StyleTheme, StylerMixin,Widget
 from components.settings import Settings
-from config import template_styles, asset_paths, settings
+from config import template_styles, asset_paths, settings, colours
 
 
 try:
@@ -57,8 +57,9 @@ class SeaingClearly(StylerMixin, QMainWindow):
 
         self._setupLayout()
 
-        self.loadSettings()
+        self.loadApplicationSettings()
 
+        self.current_settings = None
 
     def _setupLayout(self): 
         central_widget = Widget(name="centralwidget", parent=self, theme_classes=["QWidget|primary-background", "QWidget|primary-colour"])
@@ -66,19 +67,45 @@ class SeaingClearly(StylerMixin, QMainWindow):
         hori_layout = QHBoxLayout()
         hori_layout.setContentsMargins(0, 0, 0, 0)
         
-        self.left_settings_panel = SettingsPanel()
-        self.left_preview_panel = FilePreviewPanel()
+        vert_container = Widget(name="vertcontainer", parent=self)
+        vert_container.setMaximumWidth(550)
+        vert_container.setMinimumWidth(400)
+        vert_layout = QVBoxLayout(vert_container)
+        vert_layout.setContentsMargins(0, 0, 0, 0)
+        
+        self.preview_panel = FilePreviewPanel()
+        self.preview_panel.fileSelected.connect(self.onFileSelected)
+        self.settings_panel = SettingsPanel()
+        self.settings_panel.settingsChanged.connect(self.onSettingsChanged)
         self.label = QLabel("Hello World")
 
-        hori_layout.addWidget(self.left_preview_panel)
-        hori_layout.addWidget(self.label)
+        vert_layout.addWidget(self.preview_panel)
+        vert_layout.addWidget(self.settings_panel)
+
+        h_divider = QSplitter()
+        h_divider.setStyleSheet(f"QSplitter::handle {{ background-color: {colours['border']}; }}")
+        h_divider.setLineWidth(1)
+        h_divider.setOrientation(Qt.Horizontal)
+
+        vert_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        h_divider.addWidget(vert_container)
+        h_divider.addWidget(self.label)
+        h_divider.setCollapsible(0, False)
+        h_divider.setCollapsible(1, False)
+        hori_layout.addWidget(h_divider)
         hori_layout.addStretch()
 
         central_widget.setLayout(hori_layout)
         self.setCentralWidget(central_widget)
 
+    def onFileSelected(self, file_path:str, image:QImage):
+        self.label.setText(file_path)
+        pass
 
-    def loadSettings(self):
+    def onSettingsChanged(self, options:dict):
+        self.current_settings = options
+
+    def loadApplicationSettings(self):
         settings = QSettings("USC", __package_name__)
         self.resize(settings.value("windowSize", QSize(1000, 800)))
 
