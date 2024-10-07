@@ -25,24 +25,19 @@ from components.widgets import (
 )
 
 
-class FilePreviewPanel(QWidget):
+class FileSelectionPanel(Widget):
     fileSelected = Signal(str, QImage)    
     
     def __init__(self):
-        super().__init__()
+        super().__init__(name="fileselectionpanel")
         self._setupLayout()
 
     def _setupLayout(self):
-        self.setContentsMargins(0, 0, 0, 0)
+        self.setContentsMargins(10, 10, 10, 10)
 
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(0, 0, 0, 0)
 
-        main_widget = Widget(
-            name="filepreviewpanel",
-            parent=self,
-        )
-        virt_layout = QVBoxLayout()
 
         self.file_preview_path = PathLineEdit(
             "filepreviewpath",
@@ -52,7 +47,7 @@ class FilePreviewPanel(QWidget):
         self.file_preview_path.pathChanged.connect(self._onPathChanged)
         self.stacked_widget = QStackedWidget()
 
-        self.file_preview_list = FilePreviewList()
+        self.file_preview_list = FileSelectionList()
         self.file_preview_list.currentItemChanged.connect(self._onFileChanged)
         self.file_preview_list.error.connect(self.displayError)
 
@@ -61,11 +56,8 @@ class FilePreviewPanel(QWidget):
         self.stacked_widget.addWidget(self.file_preview_list)
         self.stacked_widget.addWidget(self.error_element)
 
-        virt_layout.addWidget(self.file_preview_path)
-        virt_layout.addWidget(self.stacked_widget)
-
-        main_widget.setLayout(virt_layout)
-        main_layout.addWidget(main_widget)
+        main_layout.addWidget(self.file_preview_path)
+        main_layout.addWidget(self.stacked_widget)
 
         self.setLayout(main_layout)
 
@@ -90,7 +82,7 @@ class FilePreviewPanel(QWidget):
         if list_item is None:
             return 
         
-        widget:FilePreviewListItem = self.file_preview_list.itemWidget(list_item)
+        widget:FileSelectionListItem = self.file_preview_list.itemWidget(list_item)
         self.fileSelected.emit(widget.path, widget.image_preview.image)
 
     def displayError(self, error_message: str):
@@ -143,7 +135,7 @@ class ErrorElement(Widget):
         self.error_label.setText(error_message) 
 
 
-class FilePreviewList(StylerMixin, QListWidget):
+class FileSelectionList(StylerMixin, QListWidget):
     error = Signal(str)
 
     def __init__(self):
@@ -196,7 +188,7 @@ class FilePreviewList(StylerMixin, QListWidget):
 
     def _createItem(self, file_path: str):
         worker = self.image_loader_manager.getImageWorker(file_path)
-        item = FilePreviewListItem(file_path, worker)
+        item = FileSelectionListItem(file_path, worker)
         list_item = QListWidgetItem()
         list_item.setSizeHint(item.sizeHint())
 
@@ -310,7 +302,7 @@ class FilePreviewList(StylerMixin, QListWidget):
 
 
 
-class FilePreviewListItem(StylerMixin, QWidget):
+class FileSelectionListItem(StylerMixin, QWidget):
     def __init__(self, file_path: str, image_loader, parent=None):
         super().__init__(
             name="filepreviewitem",
@@ -326,7 +318,7 @@ class FilePreviewListItem(StylerMixin, QWidget):
         main_layout = QHBoxLayout()
         main_layout.setContentsMargins(3, 3, 3, 3)
 
-        self.image_preview = ImagePreview(image_loader=self.image_loader)
+        self.image_preview = ImagePreview(preview_size=80, image_loader=self.image_loader)
         main_layout.addWidget(self.image_preview)
 
         v_layout = QVBoxLayout()

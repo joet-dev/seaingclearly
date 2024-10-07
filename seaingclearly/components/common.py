@@ -2,7 +2,7 @@ from typing import Callable, Tuple
 import os
 
 from PySide6.QtCore import QSize, Signal, Slot
-from PySide6.QtGui import QIcon, QPainter, QPalette, QColor, Qt
+from PySide6.QtGui import QIcon, QPainter
 from PySide6.QtWidgets import (
     QCheckBox,
     QHBoxLayout,

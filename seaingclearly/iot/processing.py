@@ -3,6 +3,14 @@ from cv2.typing import MatLike
 import cv2
 from numpy import ndarray, uint8, dtype
 
+
+def load_image(path:str):
+    img = cv2.imread(path)
+
+    img_encoded = preprocess_image(img, 800, 600)
+
+    return img_encoded 
+
 def preprocess_image(image:MatLike, max_width:int, max_height:int) -> ndarray[any, dtype[uint8]]: 
     height, width = image.shape[:2]
 

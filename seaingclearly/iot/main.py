@@ -1,14 +1,13 @@
 import cv2
 
-from .stream_upload import StreamUploader
+from .client import APIClient
 from .processing import preprocess_image
 
 
 class Application: 
     def __init__(self): 
         self.cap = cv2.VideoCapture(0) 
-        self.uploader = StreamUploader()
-
+        self.uploader = APIClient()
 
     def run(self): 
         while True: 
@@ -16,7 +15,6 @@ class Application:
             if not ret:
                 break
 
-            # cv2.imshow('Frame', frame)
             jpg = preprocess_image(frame, 800, 600)
 
             self.uploader.upload_frame(jpg)

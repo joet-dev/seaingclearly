@@ -88,29 +88,45 @@ class ImageLoaderManager(QObject):
         self.bg_thread.quit()
 
 
+class ImageEnhancementWorker(QObject): 
+    def __init__(self): 
+        super().__init__()
+
+    
 class ImagePreview(QLabel):
-    def __init__(self, image_loader:ImageLoaderWorker, preview_size: int = 80, parent=None):
+    def __init__(self, image_loader:ImageLoaderWorker = None, preview_size: int = None, parent=None):
         super().__init__(parent)
         self.preview_size = preview_size
         self.image = None
         
-        self.setFixedSize(preview_size, preview_size)
+        if preview_size:
+            self.setFixedSize(preview_size, preview_size)
+            
         self.setScaledContents(False)
         self.setAlignment(Qt.AlignCenter)
         self.setStyleSheet("QLabel { background-color: #222; }")
 
-        image_loader.signals.image_loaded.connect(self._onImageLoaded)
+        if image_loader:
+            image_loader.signals.image_loaded.connect(self._onImageLoaded)
 
     @Slot(QImage)
     def _onImageLoaded(self, image: QImage) -> None:
-        self.image = image
+        self.loadImage(image)
 
-        if image:
-            pixmap = QPixmap.fromImage(image)
+    def loadImage(self, image: QImage):
+        self.image = image
+        self.updatePixmap()
+
+    def resizeEvent(self, event):
+            self.updatePixmap()
+            super().resizeEvent(event)
+
+    def updatePixmap(self):
+        if self.image:
+            pixmap = QPixmap.fromImage(self.image)
             scaled_pixmap = pixmap.scaled(
                 self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation
             )
             self.setPixmap(scaled_pixmap)
-
-        else: 
-            image = None
+        else:
+            self.setPixmap(QPixmap())
