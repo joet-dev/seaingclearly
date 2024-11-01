@@ -19,3 +19,8 @@ poetry run py-hot-reload seaingclearly/app.py
 ```
 
 
+## Start Server
+
+```bash 
+poetry run py seaserver/app.py
+```

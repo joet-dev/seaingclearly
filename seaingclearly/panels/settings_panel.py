@@ -27,7 +27,7 @@ class SettingsPanel(QWidget):
         )
         virt_layout = QVBoxLayout()
 
-        dash = BoolDashboard(
+        self.dash = BoolDashboard(
             "enhancement",
             "Enhancements",
             {
@@ -36,9 +36,9 @@ class SettingsPanel(QWidget):
                 "enh_3": {"lbl": "Enhancement 3", "tt": ""},
             },
         )
-        dash.optionsChanged.connect(self.onSettingsChanged)
+        self.dash.optionsChanged.connect(self.onSettingsChanged)
 
-        virt_layout.addWidget(dash)
+        virt_layout.addWidget(self.dash)
 
         main_widget.setLayout(virt_layout)
         main_layout.addWidget(main_widget)
@@ -48,3 +48,6 @@ class SettingsPanel(QWidget):
     @Slot()
     def onSettingsChanged(self, options: dict):
         self.settingsChanged.emit(options)
+
+    def triggerSettingsChanged(self):
+        self.dash.onCheckboxStateChanged()

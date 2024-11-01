@@ -1,0 +1,239 @@
+2024-10-29 20:02:15,263 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:02:15,263 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:02:15,286 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:02:15,288 - reloader - INFO -  * Detected change in 'C:\\Users\\JosephThurlow\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\encodings\\idna.py', reloading
+2024-10-29 20:02:22,376 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:02:22,376 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:02:22,396 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:02:24,459 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:02:24,460 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:02:25,696 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:02:27,887 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:02:27,888 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:02:48,949 - reloader - INFO -  * Detected change in 'D:\\Programming\\_UNI\\seaingclearly\\seaingclearly\\panels\\viewer_panel.py', reloading
+2024-10-29 20:02:48,950 - reloader - INFO -  * Detected change in 'D:\\Programming\\_UNI\\seaingclearly\\seaingclearly\\panels\\viewer_panel.py', reloading
+2024-10-29 20:02:48,950 - reloader - INFO -  * Detected change in 'D:\\Programming\\_UNI\\seaingclearly\\seaingclearly\\panels\\viewer_panel.py', reloading
+2024-10-29 20:02:48,950 - reloader - INFO -  * Detected change in 'D:\\Programming\\_UNI\\seaingclearly\\seaingclearly\\panels\\viewer_panel.py', reloading
+2024-10-29 20:02:54,637 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:02:54,637 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:02:54,656 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:02:56,692 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:02:56,693 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:02:59,394 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:03:01,474 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:03:01,475 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:03:13,088 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:03:15,158 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 87223
+2024-10-29 20:03:15,158 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:03:17,234 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:03:19,310 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 185039
+2024-10-29 20:03:19,311 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:04,398 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:06:04,399 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:06:04,417 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:06:06,451 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:06:06,453 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:06:07,526 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:09,590 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:06:09,591 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:11,612 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:13,689 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 87223
+2024-10-29 20:06:13,689 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:15,814 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:17,878 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 185039
+2024-10-29 20:06:17,878 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:19,552 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:21,611 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 163629
+2024-10-29 20:06:21,612 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:23,431 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:25,503 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 54474
+2024-10-29 20:06:25,503 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:06:27,318 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:06:29,398 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 124425
+2024-10-29 20:06:29,399 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:07:08,483 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:07:08,484 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:07:08,503 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:07:10,533 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:07:10,534 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:07:13,686 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:07:15,768 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:07:15,768 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:11:08,136 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:11:08,136 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:11:08,160 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:11:10,224 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:11:10,225 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:11:11,085 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:11:13,276 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:11:13,277 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:11:19,676 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:11:21,733 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 87223
+2024-10-29 20:11:21,734 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:11:32,795 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:11:34,851 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:11:34,852 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:11:40,019 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:11:42,061 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:11:42,061 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:11:50,455 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:11:52,515 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:11:52,516 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:13:51,510 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:13:51,511 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:13:51,531 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:13:53,585 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:13:53,586 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:14:27,053 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:14:27,053 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:14:27,074 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:14:29,108 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:14:29,109 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:14:54,353 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:14:54,353 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:14:54,372 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:14:56,432 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:14:56,433 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:16:01,254 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:16:01,254 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:16:01,274 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:16:03,312 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:16:03,313 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:16:18,454 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:16:18,454 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:16:18,473 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:16:20,526 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:16:20,527 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:16:22,496 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:16:24,571 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:16:24,572 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:16:26,680 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:16:28,745 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 185039
+2024-10-29 20:16:28,746 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:16:30,846 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:16:32,902 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 99593
+2024-10-29 20:16:32,902 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:16:33,894 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:16:35,960 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 64988
+2024-10-29 20:16:35,961 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:16:54,616 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:16:54,617 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:16:54,638 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:16:56,675 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:16:56,676 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:17:06,324 - SeaingService - INFO - Starting Seaing Service
+2024-10-29 20:17:06,324 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-10-29 20:17:06,343 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-10-29 20:17:08,403 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:17:08,404 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:17:12,278 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:17:14,349 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 122304
+2024-10-29 20:17:14,350 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:17:22,779 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:17:24,853 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 87223
+2024-10-29 20:17:24,853 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:17:51,772 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:17:53,803 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:17:53,803 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:17:53,807 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:17:55,859 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:17:55,860 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:17:55,862 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:17:57,907 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:17:57,907 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:18:05,370 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:18:07,432 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:18:07,433 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:18:20,361 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:18:22,428 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:18:22,428 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:18:23,326 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:18:25,385 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:18:25,385 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:18:26,627 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:18:28,676 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:18:28,676 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:19:18,252 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:19:20,336 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:19:20,337 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:20:26,928 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:20:28,985 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:20:28,986 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:20:34,752 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:20:36,809 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:20:36,810 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:20:37,668 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:20:39,725 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:20:39,726 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:21:18,445 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:21:20,482 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:21:20,483 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:21:20,857 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:21:22,905 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:21:22,906 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:21:23,157 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:21:25,228 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:21:25,229 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:21:26,571 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:21:28,606 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:21:28,607 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:13,376 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:15,421 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:23:15,422 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:15,672 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:17,733 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:23:17,733 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:18,107 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:20,159 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:23:20,160 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:21,048 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:23,092 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:23:23,093 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:23,869 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:25,897 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:23:25,897 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:23:27,672 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:23:29,707 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:23:29,708 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:10,935 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:12,990 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:24:12,992 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:13,879 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:15,931 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:24:15,932 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:16,580 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:18,652 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:24:18,653 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:21,006 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:23,049 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:24:23,050 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:23,696 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:25,759 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:24:25,759 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:29,239 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:31,278 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-10-29 20:24:31,278 - SeaingAPIClient - INFO - /config - 200
+2024-10-29 20:24:48,205 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:50,235 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:24:50,236 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:50,712 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:52,761 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:24:52,762 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:53,526 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:55,569 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:24:55,570 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:24:56,043 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:24:58,108 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 40909
+2024-10-29 20:24:58,108 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:25:10,213 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:25:12,257 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:25:12,258 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:25:12,938 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:25:14,985 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 23249
+2024-10-29 20:25:14,985 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:26:53,700 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:26:55,744 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 46145
+2024-10-29 20:26:55,744 - SeaingAPIClient - INFO - /image/enhance - 200
+2024-10-29 20:26:56,457 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-10-29 20:26:58,492 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 200 18940
+2024-10-29 20:26:58,493 - SeaingAPIClient - INFO - /image/enhance - 200

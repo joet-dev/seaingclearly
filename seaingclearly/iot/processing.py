@@ -3,6 +3,8 @@ from cv2.typing import MatLike
 import cv2
 from numpy import ndarray, uint8, dtype
 
+from PySide6.QtGui import QImage
+
 
 def load_image(path:str):
     img = cv2.imread(path)
@@ -26,3 +28,11 @@ def preprocess_image(image:MatLike, max_width:int, max_height:int) -> ndarray[an
     _, img_encoded = cv2.imencode('.jpg', resized_image)
     
     return img_encoded
+
+def load_preprocess_image(path:str, max_width:int, max_height:int) -> ndarray[any, dtype[uint8]]:
+    img = cv2.imread(path)
+
+    img_encoded = preprocess_image(img, max_width, max_height)
+
+    return img_encoded
+

@@ -1,13 +1,13 @@
 import cv2
 
-from .client import APIClient
+from .client import SeaingAPIClient
 from .processing import preprocess_image
 
 
 class Application: 
     def __init__(self): 
         self.cap = cv2.VideoCapture(0) 
-        self.uploader = APIClient()
+        self.uploader:SeaingAPIClient = SeaingAPIClient()
 
     def run(self): 
         while True: 
@@ -17,7 +17,7 @@ class Application:
 
             jpg = preprocess_image(frame, 800, 600)
 
-            self.uploader.upload_frame(jpg)
+            self.uploader.upload(jpg)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

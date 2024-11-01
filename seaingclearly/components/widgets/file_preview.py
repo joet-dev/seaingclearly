@@ -7,14 +7,16 @@ from PySide6.QtCore import (
     Qt,
     Signal,
     Slot,
-    QThread
+    QThread,
+    QByteArray,
+    QBuffer
 )
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QLabel
 
-logging.basicConfig(level=logging.DEBUG)
-
-
+from seaingclearly.iot.service import SeaingService
+from seaingclearly.iot.processing import preprocess_image
+from numpy import ndarray, uint8, dtype, frombuffer
 
 class WorkerSignals(QObject):
     image_loaded = Signal(QImage)
@@ -88,11 +90,33 @@ class ImageLoaderManager(QObject):
         self.bg_thread.quit()
 
 
-class ImageEnhancementWorker(QObject): 
-    def __init__(self): 
+class EnhancedImageLoaderWorker(QObject):
+    def __init__(self):
         super().__init__()
+        self.signals = WorkerSignals()
 
-    
+    def loadImage(self, path:str, api_service: SeaingService):
+        image = cv2.imread(path)
+        _, img_encoded = cv2.imencode('.jpg', image) 
+        image_bytes = img_encoded.tobytes()
+
+        enhanced_image_bytes = api_service.enhanceImage(image_bytes)
+        byte_array = QByteArray(enhanced_image_bytes)
+        buffer = QBuffer(byte_array)
+        buffer.open(QBuffer.ReadOnly)
+
+        qimage = QImage()
+        qimage.loadFromData(byte_array)
+
+        self.signals.image_loaded.emit(qimage)
+
+    def _qimageToNumpy(self, image: QImage) -> ndarray[any, dtype[uint8]]:    
+        buffer = image.bits().tobytes()
+        
+        print(image.format())
+        return frombuffer(buffer, dtype=uint8).reshape(image.height(), image.width(), 4)
+
+
 class ImagePreview(QLabel):
     def __init__(self, image_loader:ImageLoaderWorker = None, preview_size: int = None, parent=None):
         super().__init__(parent)
@@ -130,3 +154,5 @@ class ImagePreview(QLabel):
             self.setPixmap(scaled_pixmap)
         else:
             self.setPixmap(QPixmap())
+
+

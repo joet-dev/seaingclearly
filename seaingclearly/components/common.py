@@ -61,15 +61,19 @@ class LabelledInput(QWidget):
 class Button(StylerMixin, QPushButton):
     def __init__(
         self,
-        name, 
-        text:str = "",
+        name,
+        text: str = "",
         custom_style: dict = None,
         icon: str = None,
     ):
         super().__init__(
             text=text,
             name=name,
-            theme_classes=[f"QPushButton#{name}|ele", f"QPushButton#{name}:hover|ele-hover", f"QPushButton#{name}|button"],
+            theme_classes=[
+                f"QPushButton#{name}|ele",
+                f"QPushButton#{name}:hover|ele-hover",
+                f"QPushButton#{name}|button",
+            ],
         )
 
         if custom_style is not None:
@@ -113,7 +117,7 @@ class LineEdit(StylerMixin, QLineEdit):
 
 
 class PathLineEdit(QWidget):
-    pathChanged = Signal(ValidationResponse)   
+    pathChanged = Signal(ValidationResponse)
 
     def __init__(
         self,
@@ -148,8 +152,8 @@ class PathLineEdit(QWidget):
 
         self.setLayout(hlayout)
 
-    def triggerChange(self): 
-        response:ValidationResponse = self.line_edit.textWithValidation()
+    def triggerChange(self):
+        response: ValidationResponse = self.line_edit.textWithValidation()
 
         self.pathChanged.emit(response)
 
@@ -159,10 +163,8 @@ class PathLineEdit(QWidget):
             folder_path = os.path.dirname(folder_path)
         else:
             folder_path = os.path.join(os.path.expanduser("~"), "Downloads")
-                
-        dialog = QFileDialog(
-            self, "Select Image/Video Folder", folder_path
-        )
+
+        dialog = QFileDialog(self, "Select Image/Video Folder", folder_path)
 
         dialog.setFileMode(QFileDialog.Directory)
 
@@ -172,7 +174,7 @@ class PathLineEdit(QWidget):
 
     def lineEdit(self):
         return self.line_edit
-    
+
 
 class Label(StylerMixin, QLabel):
     def __init__(
@@ -199,24 +201,30 @@ class BoolDashboard(StylerMixin, QGroupBox):
         super().__init__(
             title=label,
             name=name,
-            style_sheet={f"QGroupBox#{name}::title": {"subcontrol-origin": "margin", "subcontrol-position": "top center", "padding-bottom": "5px"}},
+            style_sheet={
+                f"QGroupBox#{name}::title": {
+                    "subcontrol-origin": "margin",
+                    "subcontrol-position": "top center",
+                    "padding-bottom": "5px",
+                }
+            },
             theme_classes=[f"QGroupBox#{name}|border", f"QGroupBox#{name}|group-box"],
         )
 
         self.group_layout = QVBoxLayout(self)
-        self.group_layout.setContentsMargins(5, 5, 5,5)
+        self.group_layout.setContentsMargins(5, 5, 5, 5)
 
         for key, value in items.items():
-            self.add_checkbox(key, value, True)
+            self.addCheckbox(key, value, True)
 
-    def add_checkbox(self, key: str, value: dict, checked: bool = True):
+    def addCheckbox(self, key: str, value: dict, checked: bool = True):
         label = value.get("lbl", "")
         tooltip = value.get("tt", "")
-        
+
         checkbox = Checkbox(label)
         checkbox.setChecked(checked)
         checkbox.setObjectName(key)
-        
+
         if tooltip:
             checkbox.setToolTip(tooltip)
 
@@ -226,9 +234,9 @@ class BoolDashboard(StylerMixin, QGroupBox):
 
     @Slot()
     def onCheckboxStateChanged(self):
-        self.optionsChanged.emit(self.validate_input())
+        self.optionsChanged.emit(self.validateInput())
 
-    def validate_input(self) -> dict:
+    def validateInput(self) -> dict:
         res: dict = {}
         count = self.group_layout.count()
 
@@ -238,4 +246,3 @@ class BoolDashboard(StylerMixin, QGroupBox):
             res[child.objectName()] = child.isChecked()
 
         return res
-
