@@ -15,7 +15,7 @@ image = cv2.imread(r"D:\Programming\_UNI\collection\underwater1.jpg")
 _, img_encoded = cv2.imencode('.png', image) 
 image_bytes = img_encoded.tobytes()
 
-api_service.setConfig({"config": {"white_balance": True}})
+api_service.setConfig({"config": {"white_balance": True, "super_res": False, "richard_lucy": True, "adaptive_hist_eq": False}})
 enhanced_image_bytes = api_service.enhanceImage(image_bytes)
 
 enhanced_image = Image.open(io.BytesIO(enhanced_image_bytes))

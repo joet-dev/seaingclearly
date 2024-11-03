@@ -2,12 +2,10 @@ from components.widgets import ImagePreview, EnhancedImageLoaderWorker
 from components import Widget
 from PySide6.QtWidgets import (
     QVBoxLayout,
-    QHBoxLayout,
-    QSizePolicy, 
-    QLabel
+    QSizePolicy
 )
 
-from PySide6.QtGui import QImage, Qt
+from PySide6.QtGui import QImage
 from PySide6.QtCore import QThread
 
 
@@ -17,11 +15,10 @@ from seaingclearly.iot.service import SeaingService
 class FilePreviewPanel(Widget):
     def __init__(self, api_service: SeaingService):
         super().__init__(name="filepreviewpanel")
+        self.api_service: SeaingService = api_service
         self._setupLayout()
 
-        self.api_service: SeaingService = api_service
-
-        self.thread:QThread = QThread()
+        self.thread:QThread = QThread(self)
         self.enhanced_image_worker = EnhancedImageLoaderWorker()
         self.enhanced_image_worker.moveToThread(self.thread)
         self.enhanced_image_worker.signals.image_loaded.connect(self.setEnhancedPreview)
@@ -54,8 +51,7 @@ class FilePreviewPanel(Widget):
         
         self.original_view.loadImage(image)
         
-        # TODO: LOAD ENHANCED IMAGE IS NOT THREADED
-        self.enhanced_image_worker.loadImage(path=path, api_service=self.api_service)
+        self.enhanced_image_worker.load_image.emit(path, self.api_service)
         
 
     def setEnhancedPreview(self, enhanced_image: QImage):

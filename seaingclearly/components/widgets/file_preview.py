@@ -15,7 +15,6 @@ from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QLabel
 
 from seaingclearly.iot.service import SeaingService
-from seaingclearly.iot.processing import preprocess_image
 from numpy import ndarray, uint8, dtype, frombuffer
 
 class WorkerSignals(QObject):
@@ -91,11 +90,17 @@ class ImageLoaderManager(QObject):
 
 
 class EnhancedImageLoaderWorker(QObject):
+    load_image = Signal(str, SeaingService)
+
     def __init__(self):
         super().__init__()
         self.signals = WorkerSignals()
 
+        self.load_image.connect(self.loadImage)
+
+    @Slot(str, SeaingService)
     def loadImage(self, path:str, api_service: SeaingService):
+        self.signals.image_loaded.emit(None)
         image = cv2.imread(path)
         _, img_encoded = cv2.imencode('.jpg', image) 
         image_bytes = img_encoded.tobytes()
@@ -112,8 +117,7 @@ class EnhancedImageLoaderWorker(QObject):
 
     def _qimageToNumpy(self, image: QImage) -> ndarray[any, dtype[uint8]]:    
         buffer = image.bits().tobytes()
-        
-        print(image.format())
+    
         return frombuffer(buffer, dtype=uint8).reshape(image.height(), image.width(), 4)
 
 

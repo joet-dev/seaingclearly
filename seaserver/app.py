@@ -2,10 +2,12 @@ import hashlib
 import os
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor
+import io
 
 import pyotp
 from flask import Flask, jsonify, render_template, request, session, abort, make_response
-from processing import processImg, decodeImage, encodeImage
+from processing import processImg
 
 from flask_session import Session
 
@@ -133,6 +135,8 @@ def index():
     return render_template("index.html")
 
 
+executor = ThreadPoolExecutor()
+
 @app.route("/image/enhance", methods=["POST"])
 def enhance_image():
     # auth_check()
@@ -149,8 +153,13 @@ def enhance_image():
     
     image_bytes = image_file.read()
     image_type = image_file.content_type
-    
-    img_encoded = processImg(image_bytes, image_type, {"white_balance": True})
+
+    executor.submit(process_image_task, image_bytes, image_type, config)
+
+    return jsonify({"message": "Processing started"}), 202
+
+def process_image_task(image_bytes, image_type, config):
+    img_encoded = processImg(image_bytes, image_type, config)
 
     if img_encoded is None: 
         return jsonify({"error": "Unable to encode image"}), 400
@@ -161,7 +170,6 @@ def enhance_image():
     response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
 
     return response
-
 
 @app.route("/config", methods=["POST"])
 def config():
