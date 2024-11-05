@@ -2,20 +2,13 @@ import logging
 from typing import Optional
 
 import cv2
-from PySide6.QtCore import (
-    QObject,
-    Qt,
-    Signal,
-    Slot,
-    QThread,
-    QByteArray,
-    QBuffer
-)
+from numpy import dtype, frombuffer, ndarray, uint8
+from PySide6.QtCore import QBuffer, QByteArray, QObject, Qt, QThread, Signal, Slot
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QLabel
 
 from seaingclearly.iot.service import SeaingService
-from numpy import ndarray, uint8, dtype, frombuffer
+
 
 class WorkerSignals(QObject):
     image_loaded = Signal(QImage)

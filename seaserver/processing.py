@@ -1,11 +1,13 @@
-import cv2 
 import os
+import time
+from datetime import timedelta
+from functools import wraps
+
+import cv2
 import numpy as np
-from numpy import ndarray, uint8, dtype
-from skimage import img_as_float, exposure
+from numpy import uint8
+from skimage import exposure, img_as_float
 from skimage.restoration import richardson_lucy
-
-
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(current_dir, "static/models/EDSR_x4.pb")
@@ -14,35 +16,42 @@ super_res_model = cv2.dnn_superres.DnnSuperResImpl_create()
 super_res_model.readModel(model_path)
 super_res_model.setModel("edsr", 4)
 
-def processImg(img_bytes, img_type, config:dict): 
-    np_image = decodeImage(img_bytes, img_type)
+def run_enhancement(enhancement_name:str, img_array:np.ndarray):
+    """
+    Run an enhancement function on an image array
+    """
+    func = globals().get(enhancement_name)
+    
+    if func is None: 
+        return None
+    
+    return func(img_array)
+
+def process_img(img_bytes, img_type, config:dict): 
+    np_image = decode_img(img_bytes, img_type)
 
     if np_image is None: 
         return None
     
-    if config.get("white_balance"):
-        np_image = applyWhiteBalance(np_image)
+    duration = {}
+
+    for enhancement, enabled in config.items():
+        if not enabled: 
+            continue
         
-    if config.get("super_res"):
-        np_image = superResUpscaling(np_image)
+        np_image, time = run_enhancement(enhancement, np_image)
+        duration.update(time)
 
-    if config.get("richard_lucy"):
-        np_image = richardLucyDeconvolution(np_image)
+    img_encoded = encode_img(np_image, img_type)
     
-    if config.get("adaptive_hist_eq"):
-        np_image = adaptiveHistogramEqualisation(np_image)
-
-    img_encoded = encodeImage(np_image, img_type)
-    
-    return img_encoded
-
+    return img_encoded, duration
 
 ENCODE_MAP = {
     "image/jpeg": ".jpg",
     "image/png": ".png"
 }
 
-def encodeImage(img_arr, img_format: str):
+def encode_img(img_arr, img_format: str):
     format = ENCODE_MAP.get(img_format)
     
     if not format: 
@@ -52,8 +61,7 @@ def encodeImage(img_arr, img_format: str):
 
     return img_encoded
     
-
-def decodeImage(img_bytes:bytes, img_format: str):
+def decode_img(img_bytes:bytes, img_format: str):
     """
     Decode image bytes to numpy array
     """
@@ -63,8 +71,49 @@ def decodeImage(img_bytes:bytes, img_format: str):
     else: 
         return None
 
+def bytes_to_ndarray(bytes:bytes):
+    """
+    Convert bytes to numpy array
+    """
+    return np.frombuffer(bytes, dtype=uint8)
 
-def applyWhiteBalance(image):
+def enhancement_metadata(name, description):
+    def decorator(func):
+        func.filter_name = name
+        func.filter_description = description
+        return func
+    
+    return decorator
+
+def get_available_enhancements():
+    available_filters = {}
+    for func in [white_balance, super_res_upscale, richard_lucy_deconvolution, adaptive_histograph_equalisation]:
+        available_filters[func.__name__] = {
+            "lbl": func.filter_name,
+            "tt": func.filter_description
+        }
+    return available_filters
+
+def time_enhancement(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        elapsed_time = timedelta(seconds=end_time - start_time)
+        
+        print(f"{func.__name__} took {elapsed_time} to run.")
+
+        formatted_result = (result, {func.__name__: elapsed_time.total_seconds()})
+
+        return formatted_result
+    
+    return wrapper
+
+# Image Enhancement Functions
+@enhancement_metadata("White Balance Correction", "Applies white balance correction to enhance the color balance in the image.")
+@time_enhancement
+def white_balance(image):
     """
     Apply white balance correction to an image
     """
@@ -77,7 +126,9 @@ def applyWhiteBalance(image):
     white_balanced_img = cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
     return white_balanced_img
 
-def superResUpscaling(image):
+@enhancement_metadata("Super-Resolution Upscaling", "Enhances image resolution using super-resolution techniques. Is computationally expensive.")
+@time_enhancement
+def super_res_upscale(image):
     """
     Super-Resolution Upscaling
     """
@@ -86,8 +137,9 @@ def superResUpscaling(image):
    
     return super_res_img
 
-
-def richardLucyDeconvolution(image):
+@enhancement_metadata("Richardson-Lucy Deconvolution", "Applies deconvolution to reduce blurring caused by camera optics.")
+@time_enhancement
+def richard_lucy_deconvolution(image):
     """
     Richardson-Lucy Deconvolution
     """
@@ -102,7 +154,9 @@ def richardLucyDeconvolution(image):
 
     return deconvolved_img
 
-def adaptiveHistogramEqualisation(image):
+@enhancement_metadata("Adaptive Histogram Equalization", "Enhances contrast using adaptive histogram equalization to improve image details.")
+@time_enhancement
+def adaptive_histograph_equalisation(image):
     """
     Adaptive Histogram Equalisation
     """
@@ -116,11 +170,7 @@ def adaptiveHistogramEqualisation(image):
 
     return equalised_img
 
-def bytesToNdArray(bytes:bytes):
-    """
-    Convert bytes to numpy array
-    """
-    return np.frombuffer(bytes, dtype=uint8)
+
 
 
 

@@ -2,16 +2,24 @@ import hashlib
 import os
 import time
 import uuid
+import copy
 from concurrent.futures import ThreadPoolExecutor
-import io
 
 import pyotp
-from flask import Flask, jsonify, render_template, request, session, abort, make_response
-from processing import processImg
+from dotenv import load_dotenv
+from flask import (
+    Flask,
+    abort,
+    jsonify,
+    make_response,
+    render_template,
+    request,
+    session,
+    current_app
+)
+from processing import process_img, get_available_enhancements
 
 from flask_session import Session
-
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -129,13 +137,34 @@ def auth_check():
 
 # APP ROUTES
 
-
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
-
 executor = ThreadPoolExecutor()
+# TODO: uncomment auth_checks
+
+def process_image_task(image_bytes, image_type, config):
+    try: 
+        img_encoded, duration_info = process_img(image_bytes, image_type, config)
+
+        # TODO: Use duration_info
+        if img_encoded is None: 
+            print("Error processing image")
+
+        
+        print("Image processed successfully")
+
+        # response = make_response(img_encoded.tobytes())
+
+        # response.headers.set('Content-Type', image_type)
+        # response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
+
+        # return response
+    
+    except Exception as e:
+        print(f"Error processing image: {e}")
+
 
 @app.route("/image/enhance", methods=["POST"])
 def enhance_image():
@@ -145,7 +174,8 @@ def enhance_image():
 
     if not config:
         return jsonify({"error": "Configuration not set"}), 400
-
+    
+    config_copy = copy.deepcopy(config)
     image_file = request.files.get("file")
 
     if not image_file:
@@ -154,22 +184,9 @@ def enhance_image():
     image_bytes = image_file.read()
     image_type = image_file.content_type
 
-    executor.submit(process_image_task, image_bytes, image_type, config)
+    executor.submit(process_image_task, image_bytes, image_type, config_copy)
 
     return jsonify({"message": "Processing started"}), 202
-
-def process_image_task(image_bytes, image_type, config):
-    img_encoded = processImg(image_bytes, image_type, config)
-
-    if img_encoded is None: 
-        return jsonify({"error": "Unable to encode image"}), 400
-
-    response = make_response(img_encoded.tobytes())
-
-    response.headers.set('Content-Type', image_type)
-    response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
-
-    return response
 
 @app.route("/config", methods=["POST"])
 def config():
@@ -180,6 +197,15 @@ def config():
 
     return jsonify({"message": "Configuration set"})
 
+@app.route("/options", methods=["GET"])
+def options():
+    # auth_check()
+
+    enhancement_data = get_available_enhancements()
+
+    response = {"enhancements": enhancement_data}
+
+    return jsonify(response), 200
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -190,4 +216,7 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=5000)
+    app.run(threaded=True, debug=True, host="localhost", port=5000)
+
+
+# TODO: ORDER THE FILTERS! SEND ORDERED DICTIONARIES

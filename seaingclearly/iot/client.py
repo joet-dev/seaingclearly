@@ -18,6 +18,7 @@ class SeaingAPIClient:
         CHALLENGE = "/auth-challenge"
         AUTHENTICATE = "/authenticate"
         CONFIG = "/config"
+        OPTIONS = "/options"
 
     def __init__(self):
         self.host = API_HOST
@@ -39,6 +40,21 @@ class SeaingAPIClient:
         else: 
             self.logger.error(f"{endpoint.value} - {response.status_code} - {response.json()}")
             raise Exception(f"Failed to post to {endpoint.value}")
+
+        response_json = response.json()
+
+        return response_json
+    
+    def get(self, endpoint: Endpoints):
+        response = self.session.get(
+            self._constructUrl(endpoint)
+        )
+
+        if 200 <= response.status_code < 300:
+            self.logger.info(f"{endpoint.value} - {response.status_code}")
+        else:
+            self.logger.error(f"{endpoint.value} - {response.status_code} - {response.json()}")
+            raise Exception(f"Failed to get from {endpoint.value}")
 
         response_json = response.json()
 

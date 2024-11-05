@@ -62,6 +62,9 @@ class SeaingService:
 
         return enhanced_img_bytes
 
+    def getOptions(self) -> dict:
+        return self.client.get(SeaingAPIClient.Endpoints.OPTIONS)
+
     def setConfig(self, config: dict) -> dict:
         self.config = config
 

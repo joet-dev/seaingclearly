@@ -50,7 +50,6 @@ class FilePreviewPanel(Widget):
             return
         
         self.original_view.loadImage(image)
-        
         self.enhanced_image_worker.load_image.emit(path, self.api_service)
         
 

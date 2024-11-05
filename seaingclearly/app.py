@@ -52,6 +52,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
         
         self.api_service = SeaingService()
         
+        # TODO: UNCOMMENT
         # try: 
         #     self.api_service.authenticate()
         # except Exception as e:
@@ -61,6 +62,8 @@ class SeaingClearly(StylerMixin, QMainWindow):
         #     diag.setText(str(e))
         #     diag.exec()
         #     sys.exit(1)
+
+        self.options = self.api_service.getOptions()
 
         self.setWindowTitle(f"SeaingClearly - WorkBench v{__version__}")
         self.setMinimumWidth(600)
@@ -93,7 +96,7 @@ class SeaingClearly(StylerMixin, QMainWindow):
         
         self.file_selection_panel = FileSelectionPanel()
         self.file_selection_panel.fileSelected.connect(self.onFileSelected)
-        self.settings_panel = SettingsPanel()
+        self.settings_panel = SettingsPanel(options=self.options)
         self.settings_panel.settingsChanged.connect(self.onSettingsChanged)
         self.settings_panel.triggerSettingsChanged()
 
