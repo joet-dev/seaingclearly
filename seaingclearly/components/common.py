@@ -1,4 +1,4 @@
-from typing import Callable, Tuple
+from typing import Callable, Tuple, Union
 import os
 
 from PySide6.QtCore import QSize, Signal, Slot
@@ -197,7 +197,7 @@ class Label(StylerMixin, QLabel):
 class BoolDashboard(StylerMixin, QGroupBox):
     optionsChanged = Signal(dict)
 
-    def __init__(self, name: str, label: str, items: dict):
+    def __init__(self, name: str, label: str, items: Union[dict, list]):
         super().__init__(
             title=label,
             name=name,
@@ -214,8 +214,15 @@ class BoolDashboard(StylerMixin, QGroupBox):
         self.group_layout = QVBoxLayout(self)
         self.group_layout.setContentsMargins(5, 5, 5, 5)
 
-        for key, value in items.items():
-            self.addCheckbox(key, value, True)
+        if isinstance(items, dict):
+            for key, value in items.items():
+                self.addCheckbox(key, value, True)
+
+        
+        if isinstance(items, list):
+            for chkbox_data in items:
+                key = chkbox_data.get("name")
+                self.addCheckbox(key, chkbox_data, True)
 
     def addCheckbox(self, key: str, value: dict, checked: bool = True):
         label = value.get("lbl", "")

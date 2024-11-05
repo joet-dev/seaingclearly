@@ -205,6 +205,7 @@ def options():
 
     response = {"enhancements": enhancement_data}
 
+    print(response)
     return jsonify(response), 200
 
 @app.route("/logout", methods=["POST"])

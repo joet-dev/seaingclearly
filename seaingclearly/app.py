@@ -65,6 +65,8 @@ class SeaingClearly(StylerMixin, QMainWindow):
 
         self.options = self.api_service.getOptions()
 
+        print(self.options)
+
         self.setWindowTitle(f"SeaingClearly - WorkBench v{__version__}")
         self.setMinimumWidth(600)
         self.setMinimumHeight(800)

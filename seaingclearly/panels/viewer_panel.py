@@ -52,7 +52,6 @@ class FilePreviewPanel(Widget):
         self.original_view.loadImage(image)
         self.enhanced_image_worker.load_image.emit(path, self.api_service)
         
-
     def setEnhancedPreview(self, enhanced_image: QImage):
         self.enhanced_view.loadImage(enhanced_image)
 

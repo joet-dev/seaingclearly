@@ -5,10 +5,9 @@ import os
 import uuid
 from requests.exceptions import ConnectionError
 
-from numpy import dtype, ndarray, uint8
-import numpy as np
 
 from seaingclearly.iot.client import SeaingAPIClient, ReAuthException
+from concurrent.futures import ThreadPoolExecutor
 
 from .util import DeviceInfo
 
@@ -20,6 +19,8 @@ UUID_NAMESPACE = os.environ.get("UUID_NAMESPACE")
 API_SECRET = os.environ.get("API_SECRET")
 
 class SeaingService:
+    executor = ThreadPoolExecutor(max_workers=5)
+    
     def __init__(self):
         self.logger = logging.getLogger("SeaingService")
         self.client = SeaingAPIClient()
@@ -66,12 +67,16 @@ class SeaingService:
         return self.client.get(SeaingAPIClient.Endpoints.OPTIONS)
 
     def setConfig(self, config: dict) -> dict:
+        self.executor.submit(self._setConfig, config)
+    
+    def _setConfig(self, config: dict) -> dict:
         self.config = config
 
-        return self.client.post(
+        response = self.client.post(
             SeaingAPIClient.Endpoints.CONFIG,
             json={"config": config},
         )
+        return response
     
     def _reqChallenge(self) -> dict:
         return self.client.post(
