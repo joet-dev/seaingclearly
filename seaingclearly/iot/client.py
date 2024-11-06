@@ -5,7 +5,6 @@ import os
 import logging
 
 import requests
-from numpy import dtype, ndarray, uint8
 
 class ReAuthException(Exception):
     pass

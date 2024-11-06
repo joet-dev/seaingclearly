@@ -3,6 +3,7 @@ import os
 import time
 import uuid
 import copy
+import json
 from concurrent.futures import ThreadPoolExecutor
 
 import pyotp
@@ -14,8 +15,7 @@ from flask import (
     make_response,
     render_template,
     request,
-    session,
-    current_app
+    session
 )
 from processing import process_img, get_available_enhancements
 
@@ -146,7 +146,7 @@ executor = ThreadPoolExecutor()
 
 def process_image_task(image_bytes, image_type, config):
     try: 
-        img_encoded, duration_info = process_img(image_bytes, image_type, config)
+        img_encoded, duration_info, errors = process_img(image_bytes, image_type, config)
 
         # TODO: Use duration_info
         if img_encoded is None: 
@@ -184,7 +184,9 @@ def enhance_image():
     image_bytes = image_file.read()
     image_type = image_file.content_type
 
-    img_encoded, duration_info = process_img(image_bytes, image_type, config_copy)
+
+
+    img_encoded, duration_info, errors = process_img(image_bytes, image_type, config_copy)
 
     response = make_response(img_encoded.tobytes())
 
@@ -201,6 +203,7 @@ def config():
     # auth_check()
 
     config:dict = request.json.get("config")
+
     session["config"] = config
 
     return jsonify({"message": "Configuration set"})
@@ -213,12 +216,11 @@ def options():
 
     response = {"enhancements": enhancement_data}
 
-    print(response)
     return jsonify(response), 200
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    auth_check()
+    # auth_check()
 
     session.clear()
     return jsonify({"message": "Logged out successfully"}), 200

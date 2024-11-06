@@ -39,17 +39,27 @@ def process_img(img_bytes, img_type, config: dict):
         return None
 
     duration = {}
+    errors = {}
 
     for enhancement_func in enhancement_registry:
         if enhancement_func.__name__ not in config or not config[enhancement_func.__name__]:
             continue
 
-        np_image, time = enhancement_func(np_image)
-        duration.update(time)
+        try: 
+            result = enhancement_func(np_image)
+        except Exception as e:
+            errors.update({enhancement_func.__name__: str(e)})
+            continue
+
+        if isinstance(result, list):
+            np_image = result[0]
+            duration.update(result[1])
+        else: 
+            np_image = result
 
     img_encoded = encode_img(np_image, img_type)
 
-    return img_encoded, duration
+    return img_encoded, duration, errors
 
 
 ENCODE_MAP = {"image/jpeg": ".jpg", "image/png": ".png"}
@@ -127,14 +137,16 @@ def time_enhancement(func):
 
         print(f"{func.__name__} took {elapsed_time} to run.")
 
-        formatted_result = (result, {func.__name__: elapsed_time.total_seconds()})
+        formatted_result = [result, {func.__name__: elapsed_time.total_seconds()}]
 
         return formatted_result
 
     return wrapper
 
 
-# Image Enhancement Functions
+# IMAGE ENHANCEMENT FUNCTIONS
+
+
 @enhancement_metadata(
     "White Balance Correction",
     "Applies white balance correction to enhance the color balance in the image.",
@@ -171,7 +183,6 @@ def super_res_upscale(image):
     super_res_img = super_res_model.upsample(image)
 
     return super_res_img
-
 
 @enhancement_metadata(
     "Richardson-Lucy Deconvolution",

@@ -14,6 +14,15 @@ colours = {
     "selected": "#0061ae",
 }
 
+asset_paths = {
+    "prawn": r"assets\prawn\prawn.png",
+    "folder": r"assets\folder.png",
+}
+
+settings = {
+    "file_match_pattern" : [r"*.mp4", r"*.avi", r"*.mov", r"*.jpg", r"*.jpeg", r"*.png", r"*.gif"],
+}
+
 template_styles = {
     "primary-background" : {
         "background-color": colours['bg-primary']
@@ -117,12 +126,5 @@ template_styles = {
     },
 }
 
-asset_paths = {
-    "prawn": r"assets\prawn\prawn.png",
-    "folder": r"assets\folder.png",
-}
 
-settings = {
-    "file_match_pattern" : [r"*.mp4", r"*.avi", r"*.mov", r"*.jpg", r"*.jpeg", r"*.png", r"*.gif"],
-}
 
