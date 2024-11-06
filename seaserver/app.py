@@ -184,9 +184,17 @@ def enhance_image():
     image_bytes = image_file.read()
     image_type = image_file.content_type
 
-    executor.submit(process_image_task, image_bytes, image_type, config_copy)
+    img_encoded, duration_info = process_img(image_bytes, image_type, config_copy)
 
-    return jsonify({"message": "Processing started"}), 202
+    response = make_response(img_encoded.tobytes())
+
+    response.headers.set('Content-Type', image_type)
+    response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
+
+    return response
+    # executor.submit(process_image_task, image_bytes, image_type, config_copy)
+
+    # return jsonify({"message": "Processing started"}), 202
 
 @app.route("/config", methods=["POST"])
 def config():
@@ -217,7 +225,9 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(threaded=True, debug=True, host="localhost", port=5000)
+    app.run(debug=True, host="localhost", port=5000)
+    # app.run(threaded=True, debug=True, host="localhost", port=5000)
+
 
 
 # TODO: ORDER THE FILTERS! SEND ORDERED DICTIONARIES

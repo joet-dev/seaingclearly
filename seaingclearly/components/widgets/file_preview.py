@@ -13,6 +13,7 @@ from seaingclearly.iot.service import SeaingService
 class WorkerSignals(QObject):
     image_loaded = Signal(QImage)
 
+
 class ImageLoaderWorker(QObject):
     def __init__(self, path: str):
         super().__init__()
