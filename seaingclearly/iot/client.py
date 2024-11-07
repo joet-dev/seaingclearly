@@ -60,12 +60,16 @@ class SeaingAPIClient:
         return response_json
 
 
-    def upload(self, img_bytes) -> bytes:
+    def upload(self, img_bytes, session_id):
         files = { "file": ("image.jpg", img_bytes, "image/jpeg") }
+        data = {
+            "session_id": session_id  # Add session_id to the form data
+        }
 
         response = self.session.post(
             self._constructUrl(SeaingAPIClient.Endpoints.ENHANCE),
-            files=files
+            files=files,
+            data=data
         )
 
         if response.status_code == 200:
@@ -76,8 +80,4 @@ class SeaingAPIClient:
             self.logger.error(f"{SeaingAPIClient.Endpoints.ENHANCE.value} - {response.status_code} - {response.json()}")
             raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
         
-        enhanced_img_bytes = response.content
-
-        return enhanced_img_bytes
-
         

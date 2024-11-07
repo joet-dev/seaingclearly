@@ -9,6 +9,13 @@ from requests.exceptions import ConnectionError
 from seaingclearly.iot.client import SeaingAPIClient, ReAuthException
 from concurrent.futures import ThreadPoolExecutor
 
+import websocket
+import hashlib
+import json
+import base64
+import logging
+import uuid
+
 from .util import DeviceInfo
 
 from dotenv import load_dotenv
@@ -27,9 +34,44 @@ class SeaingService:
 
         self.device_info = DeviceInfo(uuid.UUID(UUID_NAMESPACE)).to_dict()
         self.config = None
+        self.ws = None 
+        self.enhanced_image_callback = None
+        self.session_id = uuid.uuid4()
 
         self.logger.info("Starting Seaing Service")
         self.logger.info("Device: %s", json.dumps(self.device_info))
+
+
+    def _connect_to_websocket(self):
+        ws_url = f"ws://localhost:5000/updates?session_id={self.session_id}"
+        self.ws = websocket.WebSocketApp(ws_url,
+                                         on_message=self.on_message,
+                                         on_error=self.on_error,
+                                         on_close=self.on_close)
+        self.ws.on_open = self.on_open
+
+        self.executor.submit(self.ws.run_forever)
+
+    def on_message(self, ws, message):
+        """Handle incoming messages from the WebSocket."""
+        data = json.loads(message)
+
+        if "image" in data:
+            enhanced_image_base64 = data["image"]
+            enhanced_image_bytes = base64.b64decode(enhanced_image_base64)
+
+            # Call the callback function if it's set
+            if self.enhanced_image_callback:
+                self.enhanced_image_callback(enhanced_image_bytes)
+
+    def on_open(self, ws):
+        self.logger.info("WebSocket connection opened")
+
+    def on_error(self, ws, error):
+        self.logger.error(f"WebSocket error: {error}")
+
+    def on_close(self, ws, close_status_code, close_msg):
+        self.logger.info("WebSocket connection closed")
 
     def authenticate(self):
         try: 
@@ -47,10 +89,12 @@ class SeaingService:
         except Exception as e:
             self.logger.error(f"Failed to authenticate: {e}")
             raise Exception("Failed to authenticate")
+        
+        self._connect_to_websocket()
 
     def enhanceImage(self, img_bytes):
         try: 
-            enhanced_img_bytes = self.client.upload(img_bytes)
+            self.client.upload(img_bytes, self.session_id)
         except ReAuthException:
             self.logger.info("Re-authenticating")
             self.authenticate()
@@ -59,9 +103,6 @@ class SeaingService:
 
         except Exception as e:
             self.logger.exception(e)
-            return None
-
-        return enhanced_img_bytes
 
     def getOptions(self) -> dict:
         return self.client.get(SeaingAPIClient.Endpoints.OPTIONS)

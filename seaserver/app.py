@@ -1,9 +1,11 @@
+import copy
 import hashlib
 import os
 import time
-import uuid
-import copy
 import json
+import logging
+import uuid
+import base64
 from concurrent.futures import ThreadPoolExecutor
 
 import pyotp
@@ -12,14 +14,24 @@ from flask import (
     Flask,
     abort,
     jsonify,
-    make_response,
+    make_response, 
     render_template,
     request,
-    session
+    session,
 )
-from processing import process_img, get_available_enhancements
+import threading
 
+from flask_sock import Sock
 from flask_session import Session
+
+from processing import ImageEnhancer
+
+# from gevent import monkey
+# monkey.patch_all() 
+
+
+from werkzeug.routing import Rule
+
 
 load_dotenv()
 
@@ -27,9 +39,11 @@ API_SECRET = os.environ.get('API_SECRET')
 UUID = os.environ.get('UUID_NAMESPACE')
 
 app = Flask(__name__)
+sockets = Sock(app)
 
 app.secret_key = API_SECRET
 UUID_NAMESPACE = uuid.UUID(UUID)
+
 
 # Setup Session
 app.config["SESSION_TYPE"] = "filesystem"
@@ -39,45 +53,18 @@ app.config["SESSION_USE_SIGNER"] = True
 app.config["SESSION_KEY_PREFIX"] = "sc_"
 Session(app)
 
-# In-Memory Storage for Challenge Codes
+executor = ThreadPoolExecutor()
+img_enhancer = ImageEnhancer()
+
+
+# In-Memory Storage for Challenge Codes and WebSocket Clients
 challenge_storage = {}
+clients = {}
+clients_lock = threading.Lock()
 
-
-# ERROR HANDLERS
-
-
-@app.errorhandler(405)
-def method_not_allowed(e):
-    return jsonify(
-        {
-            "error": "Method Not Allowed",
-            "message": "The method is not allowed for the requested URL.",
-        }
-    ), 405
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return jsonify(
-        {
-            "error": "Not Found",
-            "message": "The requested URL was not found on the server.",
-        }
-    ), 404
-
-
-@app.errorhandler(401)
-def unauthorized(e):
-    return jsonify(
-        {
-            "error": "Unauthorized",
-            "message": "You are not authorized to access this resource.",
-        }
-    ), 401
 
 
 # AUTH ROUTES
-
 
 @app.route("/auth-challenge", methods=["POST"])
 def request_challenge():
@@ -135,40 +122,70 @@ def auth_check():
         abort(401)
 
 
+# PROCESSOR
+
+def process_image_task(image_bytes, image_type, config, session_id):
+    try: 
+        img_encoded, duration_info, errors = img_enhancer.processImg(image_bytes, image_type, config)
+
+        if img_encoded is None: 
+            print("Error processing image")
+            return 
+        
+        image_base64 = base64.b64encode(img_encoded.tobytes()).decode('utf-8')
+
+        with clients_lock:
+            print(f"Sending result to client {clients}")
+            if session_id in clients:
+                
+                print("Client found")
+                ws = clients[session_id]
+                result_message = {
+                    "message": "Image processed successfully",
+                    "image": image_base64,
+                    "duration": duration_info,
+                    "errors": errors,
+                }
+                
+                print(f"Client {result_message}")
+                ws.send(json.dumps(result_message))
+    
+    except Exception as e:
+        print(f"Error processing image: {e}")
+
+
 # APP ROUTES
 
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
-executor = ThreadPoolExecutor()
-# TODO: uncomment auth_checks
 
-def process_image_task(image_bytes, image_type, config):
-    try: 
-        img_encoded, duration_info, errors = process_img(image_bytes, image_type, config)
+@sockets.route('/updates')
+def updates_socket(ws):
+    session_id = request.args.get("session_id")
+    if not session_id:
+        ws.close()
+        return
 
-        # TODO: Use duration_info
-        if img_encoded is None: 
-            print("Error processing image")
-
-        
-        print("Image processed successfully")
-
-        # response = make_response(img_encoded.tobytes())
-
-        # response.headers.set('Content-Type', image_type)
-        # response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
-
-        # return response
+    clients[session_id] = ws
     
-    except Exception as e:
-        print(f"Error processing image: {e}")
+    print(f"Starting client {clients}")
+    try:
+        while True:
+            print("socketing")
+            message = ws.receive()
+            if message is None:
+                break
+
+    finally:
+        print(f"closing client {clients}")
+        clients.pop(session_id, None)
 
 
 @app.route("/image/enhance", methods=["POST"])
 def enhance_image():
-    # auth_check()
+    auth_check()
 
     config = session.get("config")
 
@@ -178,29 +195,31 @@ def enhance_image():
     config_copy = copy.deepcopy(config)
     image_file = request.files.get("file")
 
+    session_id = request.form.get("session_id")
+    if not session_id:
+        return jsonify({"error": "Session ID is required for WebSocket communication"}), 400
+
     if not image_file:
         return jsonify({"error": "Image file is required"}), 400
     
     image_bytes = image_file.read()
     image_type = image_file.content_type
 
+    # img_encoded, duration_info, errors = process_img(image_bytes, image_type, config_copy)
 
+    # response = make_response(img_encoded.tobytes())
 
-    img_encoded, duration_info, errors = process_img(image_bytes, image_type, config_copy)
+    # response.headers.set('Content-Type', image_type)
+    # response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
 
-    response = make_response(img_encoded.tobytes())
+    # return response
+    executor.submit(process_image_task, image_bytes, image_type, config_copy, session_id)
 
-    response.headers.set('Content-Type', image_type)
-    response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
-
-    return response
-    # executor.submit(process_image_task, image_bytes, image_type, config_copy)
-
-    # return jsonify({"message": "Processing started"}), 202
+    return jsonify({"message": "Processing started"}), 202
 
 @app.route("/config", methods=["POST"])
 def config():
-    # auth_check()
+    auth_check()
 
     config:dict = request.json.get("config")
 
@@ -210,9 +229,9 @@ def config():
 
 @app.route("/options", methods=["GET"])
 def options():
-    # auth_check()
+    auth_check()
 
-    enhancement_data = get_available_enhancements()
+    enhancement_data = img_enhancer.getAvailableEnhancements()
 
     response = {"enhancements": enhancement_data}
 
@@ -220,16 +239,54 @@ def options():
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    # auth_check()
+    auth_check()
 
     session.clear()
     return jsonify({"message": "Logged out successfully"}), 200
 
 
-if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=5000)
-    # app.run(threaded=True, debug=True, host="localhost", port=5000)
+# ERROR HANDLERS
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return jsonify(
+        {
+            "error": "Method Not Allowed",
+            "message": "The method is not allowed for the requested URL.",
+        }
+    ), 405
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify(
+        {
+            "error": "Not Found",
+            "message": "The requested URL was not found on the server.",
+        }
+    ), 404
+
+
+@app.errorhandler(401)
+def unauthorized(e):
+    return jsonify(
+        {
+            "error": "Unauthorized",
+            "message": "You are not authorized to access this resource.",
+        }
+    ), 401
 
 
 
-# TODO: ORDER THE FILTERS! SEND ORDERED DICTIONARIES
+if __name__ == "__main__":    
+    # from gevent import pywsgi
+
+    # http_server = pywsgi.WSGIServer(('', 5000), app)
+    # http_server.serve_forever()
+
+    # app.run(debug=True, host="localhost", port=5000)
+
+    app.run(threaded=True, debug=True, host="localhost", port=5000)
+
+
+# TODO: uncomment auth_checks

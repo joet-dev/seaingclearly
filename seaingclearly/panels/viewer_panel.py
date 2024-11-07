@@ -22,6 +22,7 @@ class FilePreviewPanel(Widget):
         self.enhanced_image_worker = EnhancedImageLoaderWorker()
         self.enhanced_image_worker.moveToThread(self.thread)
         self.enhanced_image_worker.signals.image_loaded.connect(self.setEnhancedPreview)
+        self.api_service.enhanced_image_callback = self.enhanced_image_worker.onEnhancedImage
         self.thread.start()
 
         self.current_path = None

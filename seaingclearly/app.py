@@ -53,15 +53,15 @@ class SeaingClearly(StylerMixin, QMainWindow):
         self.api_service = SeaingService()
         
         # TODO: UNCOMMENT
-        # try: 
-        #     self.api_service.authenticate()
-        # except Exception as e:
-        #     diag = QMessageBox()
-        #     diag.setWindowTitle("SeaingClearly - Error")
-        #     diag.setIcon(QMessageBox.Critical)
-        #     diag.setText(str(e))
-        #     diag.exec()
-        #     sys.exit(1)
+        try: 
+            self.api_service.authenticate()
+        except Exception as e:
+            diag = QMessageBox()
+            diag.setWindowTitle("SeaingClearly - Error")
+            diag.setIcon(QMessageBox.Critical)
+            diag.setText(str(e))
+            diag.exec()
+            sys.exit(1)
 
         self.options = self.api_service.getOptions()
 

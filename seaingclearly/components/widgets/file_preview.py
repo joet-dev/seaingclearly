@@ -1,6 +1,9 @@
 import logging
 from typing import Optional
 
+import base64
+import websocket
+import json
 import cv2
 from numpy import dtype, frombuffer, ndarray, uint8
 from PySide6.QtCore import QBuffer, QByteArray, QObject, Qt, QThread, Signal, Slot
@@ -91,15 +94,18 @@ class EnhancedImageLoaderWorker(QObject):
         self.signals = WorkerSignals()
 
         self.load_image.connect(self.loadImage)
-
+        
     @Slot(str, SeaingService)
     def loadImage(self, path:str, api_service: SeaingService):
         self.signals.image_loaded.emit(None)
+
         image = cv2.imread(path)
         _, img_encoded = cv2.imencode('.jpg', image) 
         image_bytes = img_encoded.tobytes()
+        
+        api_service.enhanceImage(image_bytes)
 
-        enhanced_image_bytes = api_service.enhanceImage(image_bytes)
+    def onEnhancedImage(self, enhanced_image_bytes: bytes):
         byte_array = QByteArray(enhanced_image_bytes)
         buffer = QBuffer(byte_array)
         buffer.open(QBuffer.ReadOnly)
