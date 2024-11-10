@@ -10,11 +10,7 @@ from seaingclearly.iot.client import SeaingAPIClient, ReAuthException
 from concurrent.futures import ThreadPoolExecutor
 
 import websocket
-import hashlib
-import json
 import base64
-import logging
-import uuid
 
 from .util import DeviceInfo
 

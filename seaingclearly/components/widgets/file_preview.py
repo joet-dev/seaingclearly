@@ -1,9 +1,6 @@
 import logging
 from typing import Optional
 
-import base64
-import websocket
-import json
 import cv2
 from numpy import dtype, frombuffer, ndarray, uint8
 from PySide6.QtCore import QBuffer, QByteArray, QObject, Qt, QThread, Signal, Slot
