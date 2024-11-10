@@ -3,7 +3,6 @@ import hashlib
 import os
 import time
 import json
-import logging
 import uuid
 import base64
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +13,6 @@ from flask import (
     Flask,
     abort,
     jsonify,
-    make_response, 
     render_template,
     request,
     session,
@@ -30,7 +28,6 @@ from processing import ImageEnhancer
 # monkey.patch_all() 
 
 
-from werkzeug.routing import Rule
 
 
 load_dotenv()
@@ -205,14 +202,6 @@ def enhance_image():
     image_bytes = image_file.read()
     image_type = image_file.content_type
 
-    # img_encoded, duration_info, errors = process_img(image_bytes, image_type, config_copy)
-
-    # response = make_response(img_encoded.tobytes())
-
-    # response.headers.set('Content-Type', image_type)
-    # response.headers.set('Content-Disposition', 'attachment', filename='enhanced_image.bin')
-
-    # return response
     executor.submit(process_image_task, image_bytes, image_type, config_copy, session_id)
 
     return jsonify({"message": "Processing started"}), 202
@@ -289,4 +278,3 @@ if __name__ == "__main__":
     app.run(threaded=True, debug=True, host="localhost", port=5000)
 
 
-# TODO: uncomment auth_checks

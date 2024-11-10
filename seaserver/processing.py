@@ -12,11 +12,11 @@ from skimage import exposure, img_as_float, img_as_ubyte
 from skimage.restoration import richardson_lucy
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, "static/models/FSRCNN_x4.pb")
+model_path = os.path.join(current_dir, "static/models/ESPCN_x2.pb")
 
 super_res_model = cv2.dnn_superres.DnnSuperResImpl_create()
 super_res_model.readModel(model_path)
-super_res_model.setModel("fsrcnn", 4)
+super_res_model.setModel("espcn", 4)
 
 enhancement_registry = []
 

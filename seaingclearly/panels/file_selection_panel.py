@@ -61,11 +61,6 @@ class FileSelectionPanel(Widget):
 
         self.setLayout(main_layout)
 
-        # TODO Comment out
-        self.file_preview_path.line_edit.setText(
-            r"D:\Programming\_UNI\SEAING-CLEARLY\datasets\Underwater Marine Species.v6-marinedataset_v5.yolov8\test\images"
-        )
-
     def _onPathChanged(self, response: ValidationResponse):
         self.file_preview_list.clear()
 

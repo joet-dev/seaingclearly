@@ -888,3 +888,437 @@ Traceback (most recent call last):
   File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
     raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
 Exception: Failed to upload to /image/enhance
+2024-11-07 14:49:03,698 - SeaingService - INFO - Starting Seaing Service
+2024-11-07 14:49:03,698 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-07 14:49:03,700 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-07 14:49:05,764 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /auth-challenge HTTP/11" 200 54
+2024-11-07 14:49:05,765 - SeaingAPIClient - INFO - /auth-challenge - 200
+2024-11-07 14:49:05,766 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:49:07,809 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /authenticate HTTP/11" 200 45
+2024-11-07 14:49:07,809 - SeaingAPIClient - INFO - /authenticate - 200
+2024-11-07 14:49:07,810 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:49:09,846 - websocket - INFO - Websocket connected
+2024-11-07 14:49:09,846 - SeaingService - INFO - WebSocket connection opened
+2024-11-07 14:49:09,853 - urllib3.connectionpool - DEBUG - http://localhost:5000 "GET /options HTTP/11" 200 1167
+2024-11-07 14:49:09,853 - SeaingAPIClient - INFO - /options - 200
+2024-11-07 14:49:09,875 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:49:11,930 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 14:49:11,931 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 14:49:52,586 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:49:54,623 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:49:54,624 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:49:54,624 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:51:32,687 - SeaingService - INFO - Starting Seaing Service
+2024-11-07 14:51:32,688 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-07 14:51:32,690 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-07 14:51:34,736 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /auth-challenge HTTP/11" 200 54
+2024-11-07 14:51:34,737 - SeaingAPIClient - INFO - /auth-challenge - 200
+2024-11-07 14:51:34,738 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:51:36,788 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /authenticate HTTP/11" 200 45
+2024-11-07 14:51:36,789 - SeaingAPIClient - INFO - /authenticate - 200
+2024-11-07 14:51:36,790 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:51:38,815 - websocket - INFO - Websocket connected
+2024-11-07 14:51:38,815 - SeaingService - INFO - WebSocket connection opened
+2024-11-07 14:51:38,838 - urllib3.connectionpool - DEBUG - http://localhost:5000 "GET /options HTTP/11" 200 1167
+2024-11-07 14:51:38,838 - SeaingAPIClient - INFO - /options - 200
+2024-11-07 14:51:38,862 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:51:40,900 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 14:51:40,901 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 14:51:57,852 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:51:59,886 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:51:59,886 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:51:59,887 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:52:02,070 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:52:04,117 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:52:04,118 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:52:04,118 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:52:05,300 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:52:07,352 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:52:07,352 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:52:07,352 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:52:09,961 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:52:12,018 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:52:12,019 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:52:12,019 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:52:14,835 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:52:16,877 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:52:16,877 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:52:16,878 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:12,165 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:14,220 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:14,220 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:14,220 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:17,214 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:18,189 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (2): localhost:5000
+2024-11-07 14:54:19,249 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 14:54:19,250 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 14:54:20,243 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:20,244 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:20,244 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:20,626 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:22,670 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:22,670 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:22,670 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:24,600 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:26,650 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:26,650 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:26,650 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:27,438 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:29,490 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:29,491 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:29,491 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:30,435 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:32,493 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:32,493 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:32,493 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:53,079 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:55,128 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:54:55,129 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:54:55,129 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:54:58,304 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:54:59,468 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:55:00,329 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 14:55:00,329 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 14:55:01,525 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:55:01,526 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:55:01,526 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:55:01,537 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:55:03,582 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:55:03,582 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:55:03,582 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:55:07,420 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:55:09,468 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:55:09,469 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:55:09,469 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:55:09,473 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:55:11,529 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:55:11,529 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:55:11,529 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 14:55:11,534 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 14:55:13,587 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 14:55:13,587 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 14:55:13,587 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:34:42,713 - reloader - INFO -  * Detected change in 'D:\\Programming\\_UNI\\seaingclearly\\seaingclearly\\iot\\processing.py', reloading
+2024-11-07 15:50:04,896 - SeaingService - ERROR - WebSocket error: [WinError 10054] An existing connection was forcibly closed by the remote host
+2024-11-07 15:50:04,896 - websocket - ERROR - [WinError 10054] An existing connection was forcibly closed by the remote host - goodbye
+2024-11-07 15:50:04,896 - SeaingService - INFO - WebSocket connection closed
+2024-11-07 15:50:46,390 - SeaingService - INFO - Starting Seaing Service
+2024-11-07 15:50:46,390 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-07 15:50:46,394 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-07 15:50:46,396 - reloader - INFO -  * Detected change in 'C:\\Users\\JosephThurlow\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\encodings\\idna.py', reloading
+2024-11-07 15:50:48,222 - SeaingService - INFO - Starting Seaing Service
+2024-11-07 15:50:48,222 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-07 15:50:48,225 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-07 15:50:50,270 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /auth-challenge HTTP/11" 200 54
+2024-11-07 15:50:50,271 - SeaingAPIClient - INFO - /auth-challenge - 200
+2024-11-07 15:50:50,271 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:50:52,311 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /authenticate HTTP/11" 200 45
+2024-11-07 15:50:52,312 - SeaingAPIClient - INFO - /authenticate - 200
+2024-11-07 15:50:52,313 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:50:54,352 - websocket - INFO - Websocket connected
+2024-11-07 15:50:54,352 - SeaingService - INFO - WebSocket connection opened
+2024-11-07 15:50:54,357 - urllib3.connectionpool - DEBUG - http://localhost:5000 "GET /options HTTP/11" 200 1167
+2024-11-07 15:50:54,358 - SeaingAPIClient - INFO - /options - 200
+2024-11-07 15:50:54,381 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:50:56,444 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 15:50:56,445 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 15:51:47,153 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:51:49,204 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:51:49,204 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:51:49,204 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:00,140 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:02,192 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:02,193 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:02,193 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:02,199 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:04,250 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:04,251 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:04,251 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:06,761 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:07,478 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (2): localhost:5000
+2024-11-07 15:52:08,810 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 15:52:08,811 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 15:52:09,528 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:09,528 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:09,528 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:10,217 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:12,253 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:12,253 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:12,253 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:23,512 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:25,580 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:25,580 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:25,580 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:26,008 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:28,031 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:28,032 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:28,032 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:28,825 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:30,859 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:30,859 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:30,859 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:31,187 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:33,218 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:33,218 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:33,218 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:52:41,778 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:52:43,814 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:52:43,814 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:52:43,814 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:04,018 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:06,056 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:06,056 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:06,056 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:06,067 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:08,128 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:08,128 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:08,128 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:20,037 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:20,508 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:22,080 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 15:53:22,081 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 15:53:22,550 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 15:53:22,550 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 15:53:24,952 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:26,993 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:26,994 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:26,994 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:28,032 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:30,062 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:30,063 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:30,063 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:30,424 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:32,469 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:32,470 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:32,470 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:40,688 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:42,731 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:42,731 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:42,731 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:42,807 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:44,844 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:44,845 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:44,845 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance
+2024-11-07 15:53:45,898 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:47,957 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /config HTTP/11" 200 37
+2024-11-07 15:53:47,958 - SeaingAPIClient - INFO - /config - 200
+2024-11-07 15:53:48,910 - urllib3.connectionpool - DEBUG - Resetting dropped connection: localhost
+2024-11-07 15:53:50,970 - urllib3.connectionpool - DEBUG - http://localhost:5000 "POST /image/enhance HTTP/11" 202 38
+2024-11-07 15:53:50,971 - SeaingAPIClient - ERROR - /image/enhance - 202 - {'message': 'Processing started'}
+2024-11-07 15:53:50,971 - SeaingService - ERROR - Failed to upload to /image/enhance
+Traceback (most recent call last):
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\service.py", line 97, in enhanceImage
+    self.client.upload(img_bytes, self.session_id)
+  File "D:\Programming\_UNI\seaingclearly\seaingclearly\iot\client.py", line 81, in upload
+    raise Exception(f"Failed to upload to {SeaingAPIClient.Endpoints.ENHANCE.value}")
+Exception: Failed to upload to /image/enhance

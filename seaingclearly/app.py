@@ -52,7 +52,6 @@ class SeaingClearly(StylerMixin, QMainWindow):
         
         self.api_service = SeaingService()
         
-        # TODO: UNCOMMENT
         try: 
             self.api_service.authenticate()
         except Exception as e:
