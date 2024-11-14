@@ -3,6 +3,9 @@ import sys
 
 
 def deploy_program(version): 
+    """
+    Code to deploy the program using pyinstaller
+    """
     file_name = f'SeaingClearly_v{version}'
     
     try:

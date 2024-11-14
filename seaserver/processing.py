@@ -59,6 +59,20 @@ def bytes_to_ndarray(bytes: bytes):
 
 
 def enhancement_metadata(name, description):
+    """
+    A decorator to register an image enhancement function with associated metadata.
+
+    Args:
+        name (str): The name of the enhancement filter.
+        description (str): A description of what the enhancement filter does.
+
+    Returns:
+        function: The decorated function with the metadata attached.
+    
+    This decorator also registers the function in the enhancement registry
+    for later use in the system.
+    """
+     
     def decorator(func):
         func.filter_name = name
         func.filter_description = description
@@ -70,6 +84,21 @@ def enhancement_metadata(name, description):
 
 
 def time_enhancement(func):
+    """
+    A decorator to measure and log the execution time of an enhancement function.
+
+    Args:
+        func (function): The function to be decorated.
+
+    Returns:
+        function: A wrapped function that measures execution time and returns
+                  both the result and the elapsed time in seconds.
+    
+    The wrapped function will print the time taken to execute and return a
+    list where the first element is the function result and the second element
+    is a dictionary with the execution time in seconds.
+    """
+     
     @wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.time()
@@ -257,6 +286,7 @@ class ImageEnhancer:
         pad_width = (((kernel_size - width % kernel_size) % kernel_size) + kernel_size) * 3
 
         return pad_height * 3, pad_width * 3, point_spread_func
+    
     
     def get_iterations_by_sharpness(self, pixel_count): 
         iter = 30

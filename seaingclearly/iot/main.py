@@ -4,7 +4,12 @@ from seaingclearly.iot.client import SeaingAPIClient
 from seaingclearly.iot.processing import preprocess_image
 
 
+
 class Application: 
+    """
+    The main application class for the SeaingClearly IoT device. 
+    Please Note: This has not been tested on a Raspberry Pi and is not fully implemented.
+    """
     def __init__(self): 
         self.cap = cv2.VideoCapture(0) 
         self.uploader:SeaingAPIClient = SeaingAPIClient()
