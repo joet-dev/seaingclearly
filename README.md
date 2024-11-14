@@ -26,7 +26,7 @@ poetry shell
 Client
 
 ```bash
-poetry run py-hot-reload seaingclearly/app.py
+poetry run py seaingclearly/app.py
 ```
 
 Server
