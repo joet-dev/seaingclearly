@@ -177,3 +177,5 @@ def main():
     
     sys.exit(app.exec())
 
+
+main()

@@ -9,7 +9,7 @@ from PySide6.QtGui import QImage
 from PySide6.QtCore import QThread
 
 
-from seaingclearly.iot.service import SeaingService
+from iot.service import SeaingService
 
 
 class FilePreviewPanel(Widget):

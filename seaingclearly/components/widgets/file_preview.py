@@ -7,7 +7,7 @@ from PySide6.QtCore import QBuffer, QByteArray, QObject, Qt, QThread, Signal, Sl
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QLabel
 
-from seaingclearly.iot.service import SeaingService
+from iot.service import SeaingService
 
 
 class WorkerSignals(QObject):
