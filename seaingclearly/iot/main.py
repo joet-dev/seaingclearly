@@ -1,7 +1,7 @@
 import cv2
 
-from .client import SeaingAPIClient
-from .processing import preprocess_image
+from seaingclearly.iot.client import SeaingAPIClient
+from seaingclearly.iot.processing import preprocess_image
 
 
 class Application: 

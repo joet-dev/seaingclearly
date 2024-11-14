@@ -1,5 +1,5 @@
-from components.widgets import ImagePreview, EnhancedImageLoaderWorker
-from components import Widget
+from seaingclearly.components.widgets import ImagePreview, EnhancedImageLoaderWorker
+from seaingclearly.components import Widget
 from PySide6.QtWidgets import (
     QVBoxLayout,
     QSizePolicy
@@ -9,7 +9,7 @@ from PySide6.QtGui import QImage
 from PySide6.QtCore import QThread
 
 
-from iot.service import SeaingService
+from seaingclearly.iot.service import SeaingService
 
 
 class FilePreviewPanel(Widget):

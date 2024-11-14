@@ -2,11 +2,11 @@ import fnmatch
 import os
 from typing import List
 
-from components import PathLineEdit, StylerMixin, Widget
-from components.common import Label
-from components.settings import Settings
-from components.util import getFileSize
-from components.validators import ValidationResponse
+from seaingclearly.components import PathLineEdit, StylerMixin, Widget
+from seaingclearly.components.common import Label
+from seaingclearly.components.settings import Settings
+from seaingclearly.components.util import getFileSize
+from seaingclearly.components.validators import ValidationResponse
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QListWidget,
@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import QObject, QRunnable, Signal, Slot, QThreadPool, QTimer, Qt
 from PySide6.QtGui import QImage
 
-from components.widgets import (
+from seaingclearly.components.widgets import (
     ImageLoaderManager,
     ImagePreview,
 )

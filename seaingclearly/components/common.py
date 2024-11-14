@@ -17,8 +17,8 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
-from .styler import StylerMixin
-from .validators import validate_path, ValidationResponse
+from seaingclearly.components.styler import StylerMixin
+from seaingclearly.components.validators import validate_path, ValidationResponse
 
 
 class Widget(StylerMixin, QWidget):

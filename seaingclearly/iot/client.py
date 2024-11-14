@@ -3,11 +3,14 @@
 from enum import Enum
 import os
 import logging
+from dotenv import load_dotenv
 
 import requests
 
 class ReAuthException(Exception):
     pass
+
+load_dotenv()
 
 API_HOST = os.environ.get("API_HOST")
 

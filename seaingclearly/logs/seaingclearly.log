@@ -1325,3 +1325,12 @@ Exception: Failed to upload to /image/enhance
 2024-11-14 19:27:35,932 - SeaingService - INFO - Starting Seaing Service
 2024-11-14 19:27:35,932 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
 2024-11-14 19:27:35,944 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-14 19:37:09,246 - SeaingService - INFO - Starting Seaing Service
+2024-11-14 19:37:09,246 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-14 19:37:09,248 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-14 19:38:23,596 - SeaingService - INFO - Starting Seaing Service
+2024-11-14 19:38:23,596 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-14 19:38:23,598 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000
+2024-11-14 19:39:07,529 - SeaingService - INFO - Starting Seaing Service
+2024-11-14 19:39:07,529 - SeaingService - INFO - Device: {"device_name": "joetdev", "ip_address": "192.168.1.116", "os_info": "Windows", "machine_info": "AMD64", "mac_address": "00:d8:61:a9:cb:64", "uuid": "ec1a91bb-7ff4-51c8-9c4c-90ff9d4f8af1"}
+2024-11-14 19:39:07,531 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:5000

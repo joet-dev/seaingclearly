@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from PySide6.QtCore import Signal, Slot
-from components import Widget, BoolDashboard
+from seaingclearly.components import Widget, BoolDashboard
 
 
 class SettingsPanel(QWidget):

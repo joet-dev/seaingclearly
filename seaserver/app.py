@@ -28,13 +28,7 @@ import threading
 from flask_sock import Sock
 from flask_session import Session
 
-from processing import ImageEnhancer
-
-# from gevent import monkey
-# monkey.patch_all() 
-
-
-
+from seaserver.processing import ImageEnhancer
 
 load_dotenv()
 
@@ -71,6 +65,11 @@ clients_lock = threading.Lock()
 
 @app.route("/auth-challenge", methods=["POST"])
 def request_challenge():
+    """
+    Endpoint to request a challenge code for authentication. 
+    Device info is provided, and a challenge code is generated and returned.
+    """
+
     device_info:dict = request.json.get("device_info")
     if not device_info:
         return jsonify({"error": "Device info is required"}), 400
@@ -93,6 +92,11 @@ def request_challenge():
 
 @app.route("/authenticate", methods=["POST"])
 def verify_challenge():
+    """
+    Endpoint to verify the challenge code. The device info and modified code
+    are provided for validation. If successful, the user is authenticated.
+    """
+     
     device_info: dict = request.json.get("device_info")
     modified_code: str = request.json.get("challenge_code")
 
@@ -121,6 +125,10 @@ def verify_challenge():
 
 
 def auth_check():
+    """
+    Helper function to check if the user is authenticated. If not, returns a 401 Unauthorized response.
+    """
+
     if not session.get("authenticated"):
         abort(401)
 
@@ -128,6 +136,11 @@ def auth_check():
 # PROCESSOR
 
 def process_image_task(image_bytes, image_type, config, session_id):
+    """
+    Background task for processing images using the ImageEnhancer.
+    Once processed, the result is sent back to the WebSocket client.
+    """
+
     try: 
         img_encoded, duration_info, errors = img_enhancer.processImg(image_bytes, image_type, config)
 
@@ -150,7 +163,6 @@ def process_image_task(image_bytes, image_type, config, session_id):
                     "errors": errors,
                 }
                 
-                print(f"Client {result_message}")
                 ws.send(json.dumps(result_message))
     
     except Exception as e:
@@ -161,11 +173,20 @@ def process_image_task(image_bytes, image_type, config, session_id):
 
 @app.route("/", methods=["GET"])
 def index():
+    """
+    Route to serve the index page.
+    """
+
     return render_template("index.html")
 
 
 @sockets.route('/updates')
 def updates_socket(ws):
+    """
+    WebSocket route for handling client connections. It allows real-time communication
+    with clients for sending image processing updates.
+    """
+
     session_id = request.args.get("session_id")
     if not session_id:
         ws.close()
@@ -188,6 +209,11 @@ def updates_socket(ws):
 
 @app.route("/image/enhance", methods=["POST"])
 def enhance_image():
+    """
+    Route to handle image enhancement requests. The image is processed asynchronously,
+    and updates are sent via WebSocket.
+    """
+
     auth_check()
 
     config = session.get("config")
@@ -214,6 +240,10 @@ def enhance_image():
 
 @app.route("/config", methods=["POST"])
 def config():
+    """
+    Route to set the image processing configuration. The configuration is stored in the session.
+    """
+
     auth_check()
 
     config:dict = request.json.get("config")
@@ -224,6 +254,10 @@ def config():
 
 @app.route("/options", methods=["GET"])
 def options():
+    """
+    Route to get available image enhancement options. Returns a list of enhancements.
+    """
+
     auth_check()
 
     enhancement_data = img_enhancer.getAvailableEnhancements()
@@ -234,6 +268,10 @@ def options():
 
 @app.route("/logout", methods=["POST"])
 def logout():
+    """
+    Route to logout the user by clearing the session.
+    """
+
     auth_check()
 
     session.clear()
@@ -244,6 +282,10 @@ def logout():
 
 @app.errorhandler(405)
 def method_not_allowed(e):
+    """
+    Handle 405 Method Not Allowed errors.
+    """
+
     return jsonify(
         {
             "error": "Method Not Allowed",
@@ -254,6 +296,10 @@ def method_not_allowed(e):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """
+    Handle 404 Not Found errors.
+    """
+     
     return jsonify(
         {
             "error": "Not Found",
@@ -264,6 +310,10 @@ def page_not_found(e):
 
 @app.errorhandler(401)
 def unauthorized(e):
+    """
+    Handle 401 Unauthorized errors.
+    """
+
     return jsonify(
         {
             "error": "Unauthorized",
@@ -274,13 +324,6 @@ def unauthorized(e):
 
 
 if __name__ == "__main__":    
-    # from gevent import pywsgi
-
-    # http_server = pywsgi.WSGIServer(('', 5000), app)
-    # http_server.serve_forever()
-
-    # app.run(debug=True, host="localhost", port=5000)
-
     app.run(threaded=True, debug=True, host="localhost", port=5000)
 
 

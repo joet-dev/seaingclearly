@@ -13,11 +13,11 @@ from PySide6.QtGui import QIcon, QImage
 from PySide6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QVBoxLayout, QSizePolicy, QSplitter, QMessageBox
 from PySide6.QtCore import QSettings, QSize, Qt
 
-from panels import SettingsPanel, FileSelectionPanel, FilePreviewPanel
-from components import StyleTheme, StylerMixin,Widget
-from components.settings import Settings
-from config import template_styles, asset_paths, settings, colours
-from iot.service import SeaingService
+from seaingclearly.panels import SettingsPanel, FileSelectionPanel, FilePreviewPanel
+from seaingclearly.components import StyleTheme, StylerMixin,Widget
+from seaingclearly.components.settings import Settings
+from seaingclearly.config import template_styles, asset_paths, settings, colours
+from seaingclearly.iot.service import SeaingService
 
 
 try:
@@ -35,7 +35,6 @@ try:
 except ImportError:
     pass
 
-API_HOST = os.environ.get("API_HOST")
 
 class SeaingClearly(StylerMixin, QMainWindow): 
     def __init__(self): 

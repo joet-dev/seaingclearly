@@ -39,8 +39,6 @@ def encode_img(img_arr, img_format: str):
     
     _, img_encoded = cv2.imencode(format, img_arr)
 
-    save_encoded_image(img_encoded)
-
     return img_encoded
 
 

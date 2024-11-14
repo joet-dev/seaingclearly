@@ -6,7 +6,7 @@ import uuid
 from requests.exceptions import ConnectionError
 
 
-from iot.client import SeaingAPIClient, ReAuthException
+from seaingclearly.iot.client import SeaingAPIClient, ReAuthException
 from concurrent.futures import ThreadPoolExecutor
 
 import websocket
