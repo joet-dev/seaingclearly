@@ -23,16 +23,20 @@ poetry shell
 
 ## Run Locally
 
+From the project root directory:
+
 Client
 
 ```bash
-poetry run py seaingclearly/app.py
+poetry run py ./seaingclearly/app.py
 ```
+
+From the seaserver directory:
 
 Server
 
 ```bash
-poetry run py seaserver/app.py
+poetry run py ./main.py
 ```
 
 # Documentation

@@ -2,9 +2,7 @@ import os
 import time
 from datetime import timedelta
 from functools import wraps
-from collections import OrderedDict
 
-import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 from numpy import uint8
