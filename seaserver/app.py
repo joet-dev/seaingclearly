@@ -1,3 +1,9 @@
+"""
+COPYRIGHT: University of Sunshine Coast 2024
+
+AUTHOR: Joseph Thurlow <joseph.thurlow@protonmail.com>
+"""
+
 import copy
 import hashlib
 import os
