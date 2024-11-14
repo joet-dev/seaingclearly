@@ -2,6 +2,8 @@
 
 ## Setup
 
+Install Python version >3.12: https://www.python.org/downloads/
+
 1. Please ensure pipx is installed before continuing
 
 ```bash
@@ -23,6 +25,15 @@ poetry shell
 
 ## Run Locally
 
+From the seaserver directory:
+
+Server
+
+```bash
+poetry run py ./main.py
+```
+
+
 From the project root directory:
 
 Client
@@ -31,13 +42,6 @@ Client
 poetry run py ./seaingclearly/app.py
 ```
 
-From the seaserver directory:
-
-Server
-
-```bash
-poetry run py ./main.py
-```
 
 # Documentation
 
