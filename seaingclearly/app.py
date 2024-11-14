@@ -1,7 +1,7 @@
 """
 COPYRIGHT: University of Sunshine Coast 2024
 
-AUTHOR: Joseph Thurlow <joseph.thurlow@protonmail.com>
+AUTHOR: Joseph Thurlow <JCT020@student.usc.edu.au>
 """
 
 import os
