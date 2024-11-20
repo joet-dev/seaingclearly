@@ -14,7 +14,7 @@ model_path = os.path.join(current_dir, "static/models/ESPCN_x2.pb")
 
 super_res_model = cv2.dnn_superres.DnnSuperResImpl_create()
 super_res_model.readModel(model_path)
-super_res_model.setModel("espcn", 4)
+super_res_model.setModel("espcn", 2)
 
 enhancement_registry = []
 
@@ -131,6 +131,7 @@ class ImageEnhancer:
         return available_filters
 
     def processImg(self, img_bytes, img_type, config: dict):
+        print("Configuration", config)
         self.sharpness = None
         np_image = decode_img(img_bytes, img_type)
 
