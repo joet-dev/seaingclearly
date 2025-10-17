@@ -1,5 +1,7 @@
 # Seaing Clearly Project
 
+Flask server hosting an underwater image cleansing API for Raspberry Pi powered prawn farm monitoring. Implemented WebSockets for asynchronous, real-time image processing, enabling efficient and scalable analysis.
+
 ## Setup
 
 Install Python version >3.12: https://www.python.org/downloads/
